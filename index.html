@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amber & Shine — Modern Handcrafted Everyday Fine Jewellery Atelier</title>
+  <meta name="description" content="Discover handcrafted, modern fine jewellery designed for everyday wear, workwear, and gifting at Amber & Shine.">
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Stylesheet (Directly in root) -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP PROMOTIONAL TICKER & UTILITY BAR (FINE JEWELLERY ATELIER)
+       ========================================================================== -->
+  <div class="top-promo-bar">
+    <div class="container top-bar-container">
+      <div class="promo-ticker-text">
+        <span class="promo-sparkle">✦</span>
+        <span class="promo-perk">COMPLIMENTARY INSURED DELIVERY ON ORDERS ABOVE ₹5,000</span>
+      </div>
+
+      <div class="top-bar-links">
+        <button type="button" class="top-bar-link" onclick="app.openTrackingModal()" title="Track Order">
+          <i data-lucide="truck" size="12"></i>
+          <span>Track Order</span>
+        </button>
+        <span class="top-bar-divider">|</span>
+        <button type="button" class="top-bar-link" onclick="app.openSizeGuide()" title="Jewellery Size Guide">
+          <i data-lucide="ruler" size="12"></i>
+          <span>Size Guide</span>
+        </button>
+        <span class="top-bar-divider top-bar-trust-divider">|</span>
+        <span class="top-bar-link top-bar-trust-badge" title="Authenticity Guaranteed">
+          <i data-lucide="shield-check" size="12"></i>
+          <span>Artisan Certified</span>
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MAIN SITE HEADER (LOGO, SEARCH, PINCODE, ACTIONS)
+       ========================================================================== -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <div class="header-main-row">
+        <!-- Mobile Hamburger Button -->
+        <button type="button" class="mobile-menu-btn" onclick="app.toggleMobileNav()" aria-label="Open Navigation">
+          <i data-lucide="menu" size="22"></i>
+        </button>
+
+        <!-- Brand Logo -->
+        <a href="#home" class="brand-logo-wrap" onclick="app.navigateTo('home')">
+          <span class="brand-title">Amber & Shine</span>
+          <span class="brand-subtitle">Modern Fine Jewellery</span>
+        </a>
+
+        <!-- Integrated Search Bar (Desktop) -->
+        <div class="header-search-bar">
+          <div class="search-input-wrap">
+            <i data-lucide="search" size="16" style="color: var(--text-muted); flex-shrink: 0;"></i>
+            <input 
+              type="text" 
+              class="search-input" 
+              placeholder="Search for Handcrafted Rings, Solitaire Earrings, Pendants..." 
+              oninput="app.handleSearchInput(this.value)"
+              id="headerSearchInput"
+            >
+          </div>
+        </div>
+
+        <!-- Utilities (Desktop: Pincode, Profile, Wishlist, Bag; Mobile: accessed via bottom bar) -->
+        <div class="header-utilities">
+          <!-- Pincode Changer (Desktop only) -->
+          <button type="button" class="header-pincode-btn desktop-only" onclick="app.openPincodeModal()">
+            <i data-lucide="map-pin" size="14" style="color: var(--brand-coral);"></i>
+            <span id="headerPincodeText">Deliver to: 400001</span>
+          </button>
+
+          <!-- Customer Profile & Orders (Desktop only) -->
+          <button type="button" class="header-icon-btn desktop-only" onclick="app.openAccountModal()" title="My Account & Past Orders">
+            <i data-lucide="user" size="20"></i>
+          </button>
+
+          <!-- Wishlist (Desktop only) -->
+          <button type="button" class="header-icon-btn desktop-only" onclick="app.openWishlistDrawer()" title="Wishlist">
+            <i data-lucide="heart" size="20"></i>
+            <span class="icon-badge" id="headerWishlistBadge" style="display: none;">0</span>
+          </button>
+
+          <!-- Shopping Bag (Desktop only - Mobile uses bottom navigation bar) -->
+          <button type="button" class="header-icon-btn desktop-only" onclick="app.openCartDrawer()" title="Shopping Bag">
+            <i data-lucide="shopping-bag" size="20"></i>
+            <span class="icon-badge" id="headerCartBadge" style="display: none;">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Slide-down Mobile Search Bar -->
+      <div class="mobile-search-bar-wrap" id="mobileSearchBarWrap" style="display: none;">
+        <div class="search-input-wrap" style="width: 100%;">
+          <i data-lucide="search" size="16" style="color: var(--text-muted); flex-shrink: 0;"></i>
+          <input 
+            type="text" 
+            class="search-input" 
+            placeholder="Search rings, earrings, pendants..." 
+            oninput="app.handleSearchInput(this.value)"
+            id="mobileSearchInput"
+          >
+          <button type="button" onclick="app.toggleMobileSearchBar()" style="background: none; border: none; color: var(--text-muted); padding: 0.2rem 0.4rem; cursor: pointer;">
+            <i data-lucide="x" size="16"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Secondary Mega Navbar -->
+    <nav class="header-secondary-nav">
+      <div class="container">
+        <div class="nav-links-wrap">
+          <button type="button" class="nav-item-btn active" onclick="app.navigateTo('home')">All Jewellery</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Rings')">Rings</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Earrings')">Earrings</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Pendants')">Pendants</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Bracelets')">Bracelets & Bangles</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Mangalsutras')">Mangalsutras</button>
+          <button type="button" class="nav-item-btn" onclick="app.navigateToShop('Solitaires')">Solitaires</button>
+          <button type="button" class="nav-item-btn" onclick="app.scrollToSection('gifting-section')">
+            Gifting <span class="offer-tag-pill">HOT</span>
+          </button>
+          <button type="button" class="nav-item-btn" style="color: var(--brand-coral);" onclick="app.scrollToSection('hero-slider')">
+            Offers <span class="offer-tag-pill" style="background-color: var(--brand-coral); color: #fff;">20% OFF</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ==========================================================================
+       MAIN CONTENT VIEWS CONTAINER
+       ========================================================================== -->
+  <main id="mainContent">
+
+    <!-- ========================================================================
+         VIEW 1: HOMEPAGE (FINE JEWELLERY ATELIER)
+         ======================================================================== -->
+    <div id="home-view" class="view-section active">
+
+      <!-- 1. HERO BANNER CAROUSEL -->
+      <section class="hero-carousel-section" id="hero-slider">
+        <div class="hero-slides-wrapper" id="heroSlidesWrapper">
+          <!-- Populated by app.js -->
+        </div>
+
+        <!-- Carousel Nav Arrows (Desktop only, hover-reveal; removed on mobile phones to never cover text) -->
+        <button class="carousel-arrow-btn carousel-arrow-prev desktop-only" onclick="app.prevHeroSlide()" aria-label="Previous Slide">
+          <i data-lucide="chevron-left" size="24"></i>
+        </button>
+        <button class="carousel-arrow-btn carousel-arrow-next desktop-only" onclick="app.nextHeroSlide()" aria-label="Next Slide">
+          <i data-lucide="chevron-right" size="24"></i>
+        </button>
+
+        <div class="hero-carousel-nav" id="heroCarouselDots">
+          <!-- Dots by app.js -->
+        </div>
+      </section>
+
+      <!-- 2. "SHOP BY CATEGORY" CIRCULAR BUBBLES GRID -->
+      <section class="section-padding-sm" id="category-bubbles-section" style="background-color: #FFFFFF; border-bottom: 1px solid var(--border-subtle);">
+        <div class="container">
+          <div style="text-align: center;">
+            <span class="section-eyebrow">Explore Categories</span>
+            <h2 class="editorial-title-md">Shop by Category</h2>
+            <p class="section-subhead">From daily solitaire studs to molten fine stacks, find your signature piece.</p>
+          </div>
+
+          <div class="category-bubbles-grid" id="categoryBubblesGrid">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. "SHOP BY BUDGET / PRICE" STRIP -->
+      <section class="section-padding-sm" style="background-color: var(--bg-surface); border-bottom: 1px solid var(--border-subtle);">
+        <div class="container">
+          <div style="text-align: center;">
+            <span class="section-eyebrow" style="color: var(--brand-emerald);">Smart Price Discovery</span>
+            <h2 class="editorial-title-md">Shop by Budget</h2>
+            <p class="section-subhead">Curated fine jewellery designed to effortlessly fit your celebration budget.</p>
+          </div>
+
+          <div class="budget-filter-strip" id="budgetChipsStrip">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. TABBED PRODUCT SHOWCASE: BEST OF AMBER & SHINE -->
+      <section class="section-padding" id="showcase-section">
+        <div class="container">
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <span class="section-eyebrow">Handpicked Creations</span>
+            <h2 class="editorial-title-lg">Best of Amber & Shine</h2>
+            <p class="section-subhead">Our most sought-after artisanal and everyday fine creations.</p>
+          </div>
+
+          <!-- Tabs (Trending, Bestsellers, New, Under ₹25k) -->
+          <div class="showcase-tabs-row">
+            <button class="showcase-tab-btn active" onclick="app.selectShowcaseTab('trending', this)">Trending Now</button>
+            <button class="showcase-tab-btn" onclick="app.selectShowcaseTab('bestsellers', this)">Bestsellers</button>
+            <button class="showcase-tab-btn" onclick="app.selectShowcaseTab('new', this)">New In</button>
+            <button class="showcase-tab-btn" onclick="app.selectShowcaseTab('under25k', this)">Under ₹25,000</button>
+          </div>
+
+          <!-- Product Grid -->
+          <div class="product-grid" id="showcaseProductsGrid">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. LIFESTYLE SPOTLIGHT BANNERS (MIA STYLE WORKWEAR & PARTY) -->
+      <section class="section-padding-sm" style="background-color: var(--bg-surface);">
+        <div class="container">
+          <div class="spotlight-banners-grid">
+            <!-- Banner 1 -->
+            <div class="spotlight-card" onclick="app.navigateToShop('Workwear')">
+              <img src="https://images.unsplash.com/photo-1611591475883-9b883d6a953d?auto=format&fit=crop&w=900&q=85" alt="Workwear Minimal Jewels" class="spotlight-img">
+              <div class="spotlight-overlay">
+                <span class="spotlight-tag">9-to-5 Minimal</span>
+                <h3 class="spotlight-title">Office Chic Luxe Edit</h3>
+                <p class="spotlight-sub">Featherweight waterproof designs tailored for laptops, meetings, and effortless styling.</p>
+                <span style="font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-coral);">
+                  EXPLORE WORKWEAR →
+                </span>
+              </div>
+            </div>
+
+            <!-- Banner 2 -->
+            <div class="spotlight-card" onclick="app.navigateToShop('Party')">
+              <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=900&q=85" alt="Weekend Sparkle Jewels" class="spotlight-img">
+              <div class="spotlight-overlay">
+                <span class="spotlight-tag">Celebration & Party</span>
+                <h3 class="spotlight-title">After-Hours Radiance</h3>
+                <p class="spotlight-sub">Dazzling pavé crystals, huggie hoops, and liquid chains ready for sundown.</p>
+                <span style="font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--brand-coral);">
+                  SHOP PARTY EDIT →
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. CURATED GIFTING & OCCASIONS -->
+      <section class="section-padding" id="gifting-section">
+        <div class="container">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <span class="section-eyebrow">Thoughtful Surprises</span>
+              <h2 class="editorial-title-lg">Gift Smart, Gift Amber & Shine</h2>
+              <p class="section-subhead">Every piece arrives packaged in our signature coral gift box with a personalized card.</p>
+            </div>
+            <button class="btn btn-outline" onclick="app.navigateToShop('all')">VIEW ALL GIFTS</button>
+          </div>
+
+          <div class="gifting-grid">
+            <div class="spotlight-card" style="height: 300px;" onclick="app.navigateToShop('Earrings')">
+              <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?auto=format&fit=crop&w=600&q=80" alt="Gifts for Her" class="spotlight-img">
+              <div class="spotlight-overlay" style="padding: 1.5rem;">
+                <h4 style="font-family: var(--font-heading); font-size: 1.5rem;">Gifts for Her</h4>
+                <p style="font-size: 0.75rem; color: #EDE8E1;">Timeless pearls & solitaire studs.</p>
+              </div>
+            </div>
+
+            <div class="spotlight-card" style="height: 300px;" onclick="app.selectBudgetFilter('under-15k')">
+              <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=600&q=80" alt="Gifts under 15k" class="spotlight-img">
+              <div class="spotlight-overlay" style="padding: 1.5rem;">
+                <h4 style="font-family: var(--font-heading); font-size: 1.5rem;">Under ₹15,000</h4>
+                <p style="font-size: 0.75rem; color: #EDE8E1;">Accessible luxury for birthdays & milestones.</p>
+              </div>
+            </div>
+
+            <div class="spotlight-card" style="height: 300px;" onclick="app.navigateToShop('Rings')">
+              <img src="https://images.unsplash.com/photo-1600003014755-ba31aa59c4b6?auto=format&fit=crop&w=600&q=80" alt="Anniversary Specials" class="spotlight-img">
+              <div class="spotlight-overlay" style="padding: 1.5rem;">
+                <h4 style="font-family: var(--font-heading); font-size: 1.5rem;">Anniversary</h4>
+                <p style="font-size: 0.75rem; color: #EDE8E1;">Eternity bands & solitaire pendants.</p>
+              </div>
+            </div>
+
+            <div class="spotlight-card" style="height: 300px;" onclick="app.navigateToShop('Bracelets')">
+              <img src="https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=600&q=80" alt="Daily Self-Gifting" class="spotlight-img">
+              <div class="spotlight-overlay" style="padding: 1.5rem;">
+                <h4 style="font-family: var(--font-heading); font-size: 1.5rem;">Self-Gifting</h4>
+                <p style="font-size: 0.75rem; color: #EDE8E1;">Treat yourself to everyday fine shine.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. THE AMBER & SHINE ATELIER & DELIVERY -->
+      <section class="section-padding experience-section">
+        <div class="container">
+          <div class="experience-grid">
+            <div>
+              <span class="experience-pill-badge">
+                <i data-lucide="sparkles" size="14"></i> Direct-to-Consumer Atelier
+              </span>
+              <h2 class="editorial-title-lg" style="margin-bottom: 1rem;">Modern Luxury Without Traditional Markups</h2>
+              <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; margin-bottom: 2rem;">
+                Every Amber & Shine creation is handcrafted in hypoallergenic, anti-tarnish fine metals with brilliant artisanal finishes, handset with certified conflict-free solitaires, and offered with complete price transparency. By delivering directly to your doorstep, we eliminate traditional middleman markups while guaranteeing hallmark purity.
+              </p>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                <button class="btn btn-coral" onclick="app.navigateTo('shop')">
+                  EXPLORE ALL JEWELLERY
+                </button>
+                <button class="btn btn-outline" onclick="app.openSizeGuide()">
+                  VIEW SIZE GUIDE
+                </button>
+              </div>
+            </div>
+
+            <div class="experience-card-box">
+              <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.2rem;">
+                <div style="width: 44px; height: 44px; border-radius: 50%; background-color: var(--bg-accent-soft); display: flex; align-items: center; justify-content: center; color: var(--brand-coral);">
+                  <i data-lucide="package-check" size="20"></i>
+                </div>
+                <div>
+                  <h4 style="font-size: 1.1rem; font-weight: 700;">Insured Armored Delivery</h4>
+                  <p style="font-size: 0.78rem; color: var(--text-muted);">Serving 28,000+ PIN codes across India</p>
+                </div>
+              </div>
+              <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem;">
+                Every Amber & Shine creation is hand-inspected by certified gemmologists, secured in tamper-proof luxury velvet packaging, and delivered via express armored courier with 100% door-to-door transit insurance.
+              </p>
+              <div style="padding: 0.8rem 1rem; background-color: var(--bg-surface); border-radius: var(--radius-xs); font-size: 0.78rem; display: flex; justify-content: space-between; align-items: center;">
+                <span>Fast Transit: <strong>2–4 Business Days</strong></span>
+                <span style="color: var(--brand-coral); font-weight: 600; cursor: pointer;" onclick="app.openPincodeModal()">CHECK PINCODE →</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. ATELIER-GRADE TRUST BADGES -->
+      <section class="section-padding" style="background-color: #FFFFFF;">
+        <div class="container">
+          <div style="text-align: center; margin-bottom: 3rem;">
+            <span class="section-eyebrow">The Promise of Purity</span>
+            <h2 class="editorial-title-lg">Why Buy From Amber & Shine?</h2>
+            <p class="section-subhead">Backed by generational metallurgical mastery and radical transparent pricing.</p>
+          </div>
+
+          <div class="trust-pillars-grid">
+            <div class="trust-card">
+              <div class="trust-icon-box"><i data-lucide="award" size="24"></i></div>
+              <h4 class="trust-title">Artisan Handcrafted</h4>
+              <p class="trust-text">Every piece is individually hand-finished by master bench artisans with microscopic precision setting and mirror luster.</p>
+            </div>
+
+            <div class="trust-card">
+              <div class="trust-icon-box"><i data-lucide="package-check" size="24"></i></div>
+              <h4 class="trust-title">Insured Armored Delivery</h4>
+              <p class="trust-text">100% door-to-door transit insurance across 28,000+ PIN codes with tamper-proof luxury velvet packaging.</p>
+            </div>
+
+            <div class="trust-card">
+              <div class="trust-icon-box"><i data-lucide="refresh-cw" size="24"></i></div>
+              <h4 class="trust-title">7-Day Easy Returns</h4>
+              <p class="trust-text">Enjoy 100% full money-back guarantee with complimentary doorstep insured courier pickup.</p>
+            </div>
+
+            <div class="trust-card">
+              <div class="trust-icon-box"><i data-lucide="shield-check" size="24"></i></div>
+              <h4 class="trust-title">Lifetime Care & Polish</h4>
+              <p class="trust-text">Free annual ultrasonic steam cleaning, prong inspection, and lifetime exchange policy with complimentary doorstep pickup.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 9. REVIEWS / CLIENT LOVE -->
+      <section class="section-padding-sm" style="background-color: var(--bg-surface); border-top: 1px solid var(--border-subtle);">
+        <div class="container">
+          <div style="text-align: center; margin-bottom: 2.5rem;">
+            <span class="section-eyebrow">Real Stories</span>
+            <h2 class="editorial-title-md">Loved by 50,000+ Modern Women</h2>
+          </div>
+
+          <div class="reviews-grid">
+            <div style="background: #FFFFFF; padding: 1.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="display: flex; color: #D4AF37; gap: 2px; margin-bottom: 0.8rem;">
+                ★★★★★
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                “The Dainty Twinkle Solitaire Ring is my everyday staple! It's so featherlight that I never take it off, even during keyboard typing. Looks twice as expensive as it is.”
+              </p>
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--brand-coral-soft); color: var(--brand-coral); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;">AM</div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem;">Ananya Mishra</div>
+                  <span style="font-size: 0.7rem; color: var(--brand-emerald);">✓ Verified Buyer · Mumbai</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: #FFFFFF; padding: 1.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="display: flex; color: #D4AF37; gap: 2px; margin-bottom: 0.8rem;">
+                ★★★★★
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                “Ordered the Modern Flora Mangalsutra for my court wedding. The minimal cluster is gorgeous and layers like a dream with my fine chain. Fast 2-day delivery!”
+              </p>
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--brand-champagne-light); color: var(--brand-champagne); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;">RK</div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem;">Rhea Kapoor</div>
+                  <span style="font-size: 0.7rem; color: var(--brand-emerald);">✓ Verified Buyer · New Delhi</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: #FFFFFF; padding: 1.8rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
+              <div style="display: flex; color: #D4AF37; gap: 2px; margin-bottom: 0.8rem;">
+                ★★★★★
+              </div>
+              <p style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1rem;">
+                “The packaging and craftsmanship blew me away! The huggie earrings arrived in a gorgeous velvet gift box with certificates, and the gemstone sparkle is mesmerizing. 10/10 service!”
+              </p>
+              <div style="display: flex; align-items: center; gap: 0.8rem;">
+                <div style="width: 36px; height: 36px; border-radius: 50%; background-color: var(--brand-coral-soft); color: var(--brand-coral); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.8rem;">ST</div>
+                <div>
+                  <div style="font-weight: 700; font-size: 0.82rem;">Sneha Thomas</div>
+                  <span style="font-size: 0.7rem; color: var(--brand-emerald);">✓ Verified Buyer · Bengaluru</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ========================================================================
+         VIEW 2: CATALOG / SHOP VIEW
+         ======================================================================== -->
+    <div id="shop-view" class="view-section">
+      <div class="container" style="padding-top: 3rem; padding-bottom: 5rem;">
+        <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span class="section-eyebrow" id="catalogSubtitle">Artisanal Lightweight Fine Jewellery</span>
+            <h1 class="editorial-title-lg" id="catalogTitle">All Creations</h1>
+          </div>
+          <div style="display: flex; gap: 0.6rem;">
+            <button class="budget-chip-btn active" onclick="app.filterCatalog('all')">All</button>
+            <button class="budget-chip-btn" onclick="app.filterCatalog('Rings')">Rings</button>
+            <button class="budget-chip-btn" onclick="app.filterCatalog('Earrings')">Earrings</button>
+            <button class="budget-chip-btn" onclick="app.filterCatalog('Pendants')">Pendants</button>
+            <button class="budget-chip-btn" onclick="app.filterCatalog('Bracelets')">Bracelets</button>
+            <button class="budget-chip-btn" onclick="app.filterCatalog('Mangalsutras')">Mangalsutras</button>
+          </div>
+        </div>
+
+        <div class="product-grid" id="catalogProductGrid">
+          <!-- Populated by app.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================
+         VIEW 3: PRODUCT DETAIL PAGE (PDP)
+         ======================================================================== -->
+    <div id="product-view" class="view-section">
+      <div class="container" style="padding-top: 2.5rem; padding-bottom: 5rem;">
+        <div style="margin-bottom: 1.5rem; font-size: 0.75rem; color: var(--text-muted);">
+          <a href="#home" onclick="app.navigateTo('home')">Home</a> / 
+          <a href="#shop" onclick="app.navigateToShop('all')">Jewellery</a> / 
+          <span style="color: var(--text-primary);" id="pdpTitleBreadcrumb">Product</span>
+        </div>
+
+        <div class="pdp-layout-grid">
+          <!-- Gallery -->
+          <div>
+            <div style="position: relative; aspect-ratio: 1/1.15; background: var(--bg-surface); border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border-subtle); margin-bottom: 1rem;">
+              <img src="" alt="Product Detail" id="pdpMainImage" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div style="display: flex; gap: 0.8rem;" id="pdpThumbnails"></div>
+          </div>
+
+          <!-- PDP Details -->
+          <div>
+            <span style="font-size: 0.72rem; font-weight: 700; color: var(--brand-coral); text-transform: uppercase;" id="pdpKaratageTag">HANDCRAFTED FINE JEWEL</span>
+            <h1 style="font-family: var(--font-heading); font-size: 2.2rem; margin: 0.4rem 0 0.8rem;" id="pdpTitle">Product Name</h1>
+            
+            <div style="display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; font-size: 0.8rem;">
+              <span style="color: #D4AF37;">★★★★★</span>
+              <span style="color: var(--text-secondary);" id="pdpRatingText">4.9 (84 reviews)</span>
+            </div>
+
+            <!-- Price -->
+            <div style="padding: 1rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle); margin-bottom: 1.5rem; display: flex; align-items: baseline; gap: 1rem;">
+              <span style="font-size: 1.8rem; font-weight: 700;" id="pdpPrice">₹13,800</span>
+              <span style="font-size: 1rem; color: var(--text-muted); text-decoration: line-through;" id="pdpOriginalPrice">₹15,500</span>
+              <span style="font-size: 0.78rem; font-weight: 700; color: var(--brand-emerald); background: var(--brand-emerald-soft); padding: 0.2rem 0.6rem; border-radius: var(--radius-pill);" id="pdpSavingsTag">Save ₹1,700</span>
+            </div>
+
+            <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem;" id="pdpDescription">
+              Detailed description...
+            </p>
+
+            <!-- Metal Choice -->
+            <div style="margin-bottom: 1.5rem;">
+              <label style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary); display: block; margin-bottom: 0.5rem;">Precious Metal & Finish</label>
+              <div style="display: flex; gap: 0.6rem;" id="pdpMetalsList"></div>
+            </div>
+
+            <!-- Size Choice -->
+            <div style="margin-bottom: 1.8rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <label style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; color: var(--text-primary);">Select Size</label>
+                <button type="button" style="font-size: 0.72rem; color: var(--brand-coral); text-decoration: underline;" onclick="app.openSizeGuide()">Ring Size Guide</button>
+              </div>
+              <div style="display: flex; gap: 0.6rem;" id="pdpSizesList"></div>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; gap: 1rem; margin-bottom: 2rem;">
+              <div style="display: flex; align-items: center; border: 1px solid var(--border-subtle); border-radius: var(--radius-xs); background: var(--bg-surface);">
+                <button type="button" style="padding: 0 0.8rem; font-weight: 700;" onclick="app.decrementPdpQty()">−</button>
+                <span id="pdpQtyText" style="font-size: 0.9rem; font-weight: 600; padding: 0 0.4rem;">1</span>
+                <button type="button" style="padding: 0 0.8rem; font-weight: 700;" onclick="app.incrementPdpQty()">+</button>
+              </div>
+
+              <button class="btn btn-coral" style="flex-grow: 1;" onclick="app.addPdpToCart()">
+                ADD TO BAG
+              </button>
+
+              <button type="button" class="btn btn-outline" id="pdpWishlistBtn" onclick="app.togglePdpWishlist(this)" title="Save to Wishlist" style="padding: 0 1.1rem; display: flex; align-items: center; justify-content: center;">
+                <i data-lucide="heart" size="20"></i>
+              </button>
+            </div>
+
+            <!-- Specs Box -->
+            <div style="background: var(--bg-surface); padding: 1.2rem; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle);">
+              <h4 style="font-size: 0.85rem; font-weight: 700; margin-bottom: 0.8rem;">Product Specifications</h4>
+              <div id="pdpSpecsList"></div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Recommendations -->
+        <div style="margin-top: 5rem; padding-top: 3rem; border-top: 1px solid var(--border-subtle);">
+          <h2 class="editorial-title-md" style="text-align: center; margin-bottom: 2rem;">You May Also Love</h2>
+          <div class="product-grid" id="pdpRecommendationsGrid"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==========================================================================
+       CART DRAWER WITH PROMO ENGINE (MIA STYLE)
+       ========================================================================== -->
+  <div class="drawer-backdrop" id="drawerBackdrop" onclick="app.closeAllModals()"></div>
+
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">Your Shopping Bag (<span id="drawerCartCount">0</span>)</h3>
+      <button class="drawer-close-btn" onclick="app.closeCartDrawer()">
+        <i data-lucide="x" size="20"></i>
+      </button>
+    </div>
+
+    <!-- Free Shipping Meter -->
+    <div class="shipping-meter-wrap">
+      <div id="shippingMeterText">Add ₹5,000 more for FREE Insured Courier.</div>
+      <div class="shipping-meter-track">
+        <div class="shipping-meter-fill" id="shippingMeterFill"></div>
+      </div>
+    </div>
+
+    <!-- Promo Code Box -->
+    <div class="cart-coupon-box">
+      <div style="font-size: 0.74rem; font-weight: 700; color: var(--brand-coral);">Have a Promo Code? (Try SHINE20 or SHINE1000)</div>
+      <div class="coupon-input-wrap">
+        <input type="text" class="coupon-input" id="cartCouponInput" placeholder="Enter promo code">
+        <button type="button" class="coupon-apply-btn" onclick="app.applyCartCoupon()">APPLY</button>
+      </div>
+    </div>
+
+    <!-- Items Scroll List -->
+    <div class="drawer-items-list" id="cartItemsList"></div>
+
+    <!-- Drawer Footer -->
+    <div class="drawer-footer" id="cartDrawerFooter">
+      <div class="price-summary-line">
+        <span>Bag Subtotal</span>
+        <span id="cartSubtotalDisplay">₹0</span>
+      </div>
+      <div class="price-summary-line" id="cartDiscountRow" style="display: none; color: var(--brand-emerald);">
+        <span>Coupon Discount</span>
+        <span id="cartDiscountDisplay">- ₹0</span>
+      </div>
+      <div class="price-summary-line" style="color: var(--brand-emerald);">
+        <span>Shipping & Insured Courier</span>
+        <span>FREE</span>
+      </div>
+      <div class="price-summary-total">
+        <span>Grand Total (Incl. Taxes)</span>
+        <span id="cartFinalTotalDisplay">₹0</span>
+      </div>
+      <button class="btn btn-coral" style="width: 100%;" onclick="app.handleCartCheckout()">
+        SECURE CHECKOUT →
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================================================
+       WISHLIST DRAWER
+       ========================================================================== -->
+  <aside class="wishlist-drawer" id="wishlistDrawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">My Wishlist</h3>
+      <button class="drawer-close-btn" onclick="app.closeWishlistDrawer()">
+        <i data-lucide="x" size="20"></i>
+      </button>
+    </div>
+    <div class="drawer-items-list" id="wishlistItemsList"></div>
+  </aside>
+
+  <!-- ==========================================================================
+       PINCODE PICKER MODAL
+       ========================================================================== -->
+  <div class="app-modal" id="pincodeModal">
+    <div class="app-modal-card" style="max-width: 440px;">
+      <button class="modal-close-btn" onclick="app.closePincodeModal()"><i data-lucide="x"></i></button>
+      <div style="text-align: center; margin-bottom: 1.5rem;">
+        <i data-lucide="map-pin" size="32" style="color: var(--brand-coral); margin-bottom: 0.5rem;"></i>
+        <h3 style="font-size: 1.3rem; font-weight: 700;">Select Delivery Location</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem;">Enter your 6-digit pincode for precise delivery dates & express courier availability.</p>
+      </div>
+      <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+        <input type="text" class="coupon-input" id="modalPincodeInput" placeholder="e.g. 400001" maxlength="6">
+        <button class="btn btn-coral" style="padding: 0.5rem 1.2rem;" onclick="app.saveModalPincode()">SAVE</button>
+      </div>
+      <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+        <span style="font-size: 0.72rem; color: var(--text-muted);">Quick Picks:</span>
+        <button class="budget-chip-btn" style="padding: 0.25rem 0.7rem; font-size: 0.72rem;" onclick="document.getElementById('modalPincodeInput').value='400001'; app.saveModalPincode();">Mumbai (400001)</button>
+        <button class="budget-chip-btn" style="padding: 0.25rem 0.7rem; font-size: 0.72rem;" onclick="document.getElementById('modalPincodeInput').value='110001'; app.saveModalPincode();">Delhi (110001)</button>
+        <button class="budget-chip-btn" style="padding: 0.25rem 0.7rem; font-size: 0.72rem;" onclick="document.getElementById('modalPincodeInput').value='560001'; app.saveModalPincode();">Bengaluru (560001)</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SIZE GUIDE MODAL
+       ========================================================================== -->
+  <div class="app-modal" id="sizeGuideModal">
+    <div class="app-modal-card" style="max-width: 520px;">
+      <button class="modal-close-btn" onclick="app.closeSizeGuide()"><i data-lucide="x"></i></button>
+      <span class="section-eyebrow">Ring Sizing Guide</span>
+      <h3 style="font-size: 1.35rem; font-weight: 700; margin-bottom: 0.5rem;">Indian & International Size Chart</h3>
+      <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.2rem;">All Amber & Shine rings are designed with comfort-fit inner bands.</p>
+      <table style="width: 100%; border-collapse: collapse; font-size: 0.82rem; text-align: left;">
+        <thead>
+          <tr style="background: var(--bg-surface); color: var(--brand-coral);">
+            <th style="padding: 0.6rem;">Indian Size</th>
+            <th style="padding: 0.6rem;">US Size</th>
+            <th style="padding: 0.6rem;">Diameter (mm)</th>
+            <th style="padding: 0.6rem;">Circumference</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 0.6rem;">IN 10</td><td style="padding: 0.6rem;">US 5</td><td style="padding: 0.6rem;">15.7 mm</td><td style="padding: 0.6rem;">49.3 mm</td></tr>
+          <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 0.6rem;">IN 12</td><td style="padding: 0.6rem;">US 6</td><td style="padding: 0.6rem;">16.5 mm</td><td style="padding: 0.6rem;">51.9 mm</td></tr>
+          <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 0.6rem;">IN 14</td><td style="padding: 0.6rem;">US 7</td><td style="padding: 0.6rem;">17.3 mm</td><td style="padding: 0.6rem;">54.4 mm</td></tr>
+          <tr style="border-bottom: 1px solid var(--border-subtle);"><td style="padding: 0.6rem;">IN 16</td><td style="padding: 0.6rem;">US 8</td><td style="padding: 0.6rem;">18.1 mm</td><td style="padding: 0.6rem;">57.0 mm</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+  <!-- ==========================================================================
+       CUSTOMER ACCOUNT & PAST ORDERS MODAL
+       ========================================================================== -->
+  <div class="app-modal" id="customerAccountModal">
+    <div class="app-modal-card" style="max-width: 540px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="app.closeAccountModal()"><i data-lucide="x"></i></button>
+      
+      <!-- Unauthenticated View -->
+      <div id="accountAuthView">
+        <div style="text-align: center; margin-bottom: 1.5rem;">
+          <i data-lucide="user" size="32" style="color: var(--brand-coral); margin-bottom: 0.5rem;"></i>
+          <h3 style="font-size: 1.4rem; font-weight: 700;">Customer Account</h3>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.3rem;">Sign in to view your past orders, track deliveries, and manage your wishlist.</p>
+        </div>
+
+        <!-- Auth Redirect Notice Banner -->
+        <div id="authNoticeBanner" class="auth-notice-banner" style="display: none;">
+          <i data-lucide="shield-alert" size="16"></i>
+          <span id="authNoticeText">Please sign in or create an account to proceed.</span>
+        </div>
+
+        <div class="account-auth-tabs" id="accountAuthTabs">
+          <button type="button" class="account-tab-btn active" id="tabSignInBtn" onclick="app.switchAuthTab('signin')">Sign In</button>
+          <button type="button" class="account-tab-btn" id="tabRegisterBtn" onclick="app.switchAuthTab('register')">Create Account</button>
+        </div>
+
+        <!-- Sign In Form -->
+        <form id="signInForm" onsubmit="app.handleCustomerLogin(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+          <div id="loginErrorMessage" class="auth-error-banner" style="display: none;"></div>
+          <div>
+            <label class="admin-field-label">Email Address *</label>
+            <input type="email" id="loginEmail" required placeholder="name@example.com" class="admin-input" autocomplete="username">
+          </div>
+          <div>
+            <label class="admin-field-label">Password *</label>
+            <input type="password" id="loginPassword" required placeholder="••••••••" class="admin-input" autocomplete="current-password">
+          </div>
+          <button type="submit" id="loginSubmitBtn" class="btn btn-coral" style="width: 100%;">SIGN IN TO ACCOUNT</button>
+        </form>
+
+        <!-- Register Form (hidden initially) -->
+        <form id="registerForm" onsubmit="app.handleCustomerRegister(event)" style="display: none; flex-direction: column; gap: 1rem;">
+          <div id="registerErrorMessage" class="auth-error-banner" style="display: none;"></div>
+          <div>
+            <label class="admin-field-label">Full Name *</label>
+            <input type="text" id="regName" required placeholder="e.g. Priya Patel" class="admin-input" autocomplete="name">
+          </div>
+          <div>
+            <label class="admin-field-label">Email Address *</label>
+            <input type="email" id="regEmail" required placeholder="priya@example.com" class="admin-input" autocomplete="email">
+          </div>
+          <div>
+            <label class="admin-field-label">Password * (Min. 6 characters)</label>
+            <input type="password" id="regPassword" required placeholder="Create a secure password" minlength="6" class="admin-input" autocomplete="new-password">
+          </div>
+          <button type="submit" id="registerSubmitBtn" class="btn btn-coral" style="width: 100%;">CREATE ACCOUNT</button>
+        </form>
+
+        <!-- Email Verification Step (hidden initially) -->
+        <div id="verifyEmailView" style="display: none; flex-direction: column; gap: 1rem;">
+          <div style="text-align: center; margin-bottom: 0.5rem;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: rgba(224, 122, 95, 0.12); color: var(--brand-coral); display: inline-flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+              <i data-lucide="mail-check" size="24"></i>
+            </div>
+            <h4 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Verify Your Email</h4>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.35rem;" id="verifyEmailNotice">
+              We've sent a 6-digit verification code to your email. Please enter it below to activate your account.
+            </p>
+          </div>
+
+          <div id="verifyDevCodeBox" style="display: none; background: #FAF6F0; border: 1px dashed var(--brand-champagne); padding: 0.6rem 0.8rem; border-radius: var(--radius-xs); font-size: 0.78rem; text-align: center; color: var(--text-primary);">
+            <span style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 2px;">Demo Verification Code</span>
+            <span>Active OTP: <strong id="verifyDevCodeText" style="letter-spacing: 0.15em; font-size: 1rem; color: var(--brand-coral);">123456</strong></span>
+          </div>
+
+          <div id="verifyErrorMessage" class="auth-error-banner" style="display: none;"></div>
+
+          <form id="verifyEmailForm" onsubmit="app.handleVerifyEmail(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+            <input type="hidden" id="verifyTargetEmail">
+            <div>
+              <label class="admin-field-label" style="text-align: center; display: block;">Enter 6-Digit Code</label>
+              <input 
+                type="text" 
+                id="verifyCodeInput" 
+                required 
+                maxlength="6" 
+                pattern="[0-9]{6}" 
+                placeholder="123456" 
+                class="admin-input" 
+                style="text-align: center; font-size: 1.4rem; font-weight: 700; letter-spacing: 0.35em; padding: 0.7rem;"
+                autocomplete="one-time-code"
+              >
+            </div>
+            <button type="submit" id="verifySubmitBtn" class="btn btn-coral" style="width: 100%;">VERIFY & ACTIVATE ACCOUNT</button>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; margin-top: 0.3rem;">
+              <button type="button" style="background: none; border: none; color: var(--text-muted); cursor: pointer;" onclick="app.switchAuthTab('signin')">
+                ← Back to Sign In
+              </button>
+              <button type="button" id="resendCodeBtn" style="background: none; border: none; color: var(--brand-coral); font-weight: 600; cursor: pointer;" onclick="app.handleResendCode()">
+                Resend Code
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Authenticated Profile & Past Orders View -->
+      <div id="accountProfileView" style="display: none;">
+        <div class="customer-profile-card">
+          <div class="customer-avatar" id="customerAvatarChar">A</div>
+          <div class="customer-info-meta">
+            <div class="customer-name" id="customerDisplayName">Ananya Sharma</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted);" id="customerDisplayEmail">ananya@example.com</div>
+            <span class="customer-tier-badge" id="customerDisplayTier">Amber VIP Member</span>
+          </div>
+          <button type="button" class="btn btn-outline" style="padding: 0.4rem 0.8rem; font-size: 0.76rem;" onclick="app.handleCustomerLogout()">Log Out</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+          <h4 style="font-size: 1.1rem; font-weight: 700;">Past Orders & Tracking</h4>
+          <span style="font-size: 0.78rem; color: var(--text-muted);" id="ordersCountDisplay">1 Order</span>
+        </div>
+
+        <!-- Orders List Container -->
+        <div id="pastOrdersContainer" style="max-height: 380px; overflow-y: auto;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       ORDER TRACKING MODAL
+       ========================================================================== -->
+  <div class="app-modal" id="orderTrackingModal">
+    <div class="app-modal-card" style="max-width: 520px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="app.closeTrackingModal()"><i data-lucide="x"></i></button>
+      <div style="text-align: center; margin-bottom: 1.2rem;">
+        <i data-lucide="truck" size="32" style="color: var(--brand-coral); margin-bottom: 0.5rem;"></i>
+        <h3 style="font-size: 1.4rem; font-weight: 700;">Track Your Order</h3>
+        <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 0.2rem;">Live updates directly from our secure armored logistics network.</p>
+      </div>
+
+      <!-- Search / Input form -->
+      <form onsubmit="app.handleSearchTracking(event)" style="display: flex; gap: 0.5rem; margin-bottom: 1.2rem;">
+        <input type="text" id="trackingInputId" required placeholder="Enter your Order ID (e.g. AS-XXXXX)" class="admin-input" style="flex: 1; text-transform: uppercase;">
+        <button type="submit" class="btn btn-coral" style="padding: 0.65rem 1.3rem;">TRACK</button>
+      </form>
+
+      <!-- Details & Timeline View -->
+      <div id="trackingDetailsView"></div>
+    </div>
+  </div>
+
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- ==========================================================================
+       FOOTER (FINE JEWELLERY ATELIER)
+       ========================================================================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <!-- Newsletter Banner -->
+      <div class="footer-newsletter-banner">
+        <div class="footer-newsletter-text">
+          <h3>Get ₹1,000 Off Your First Order</h3>
+          <p style="font-size: 0.85rem; color: #C8C3BC;">Sign up for exclusive access to secret sales, styling guides & capsule launches.</p>
+        </div>
+        <div style="display: flex; gap: 0.5rem; max-width: 400px; width: 100%;">
+          <input type="email" placeholder="Enter your email address" style="background: #FFFFFF; color: #1F1E1D; padding: 0.75rem 1rem; border-radius: var(--radius-xs); font-size: 0.82rem; flex-grow: 1;">
+          <button class="btn btn-coral" style="padding: 0.75rem 1.4rem;" onclick="app.showToast('Welcome to Amber & Shine! Use code SHINE1000 for ₹1,000 off.')">JOIN</button>
+        </div>
+      </div>
+
+      <!-- Links Grid -->
+      <div class="footer-columns-grid">
+        <div>
+          <h4 style="font-family: var(--font-heading); font-size: 1.8rem; color: #fff; margin-bottom: 0.5rem;">Amber & Shine</h4>
+          <p style="font-size: 0.82rem; line-height: 1.7; color: #9E9992; margin-bottom: 1.5rem;">
+            Thoughtfully sculpted, waterproof statement jewellery designed for the effortless rhythm, grace, and confidence of contemporary women.
+          </p>
+          <div style="font-size: 0.78rem; color: #D4AF37;">
+            ✦ Certified Authenticity & Insured Transit Assurance
+          </div>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Categories</h4>
+          <ul class="footer-links-list">
+            <li><a href="#shop" onclick="app.navigateToShop('Rings')">Fine Rings</a></li>
+            <li><a href="#shop" onclick="app.navigateToShop('Earrings')">Solitaire Earrings</a></li>
+            <li><a href="#shop" onclick="app.navigateToShop('Pendants')">Pendants & Chains</a></li>
+            <li><a href="#shop" onclick="app.navigateToShop('Bracelets')">Bracelets & Cuffs</a></li>
+            <li><a href="#shop" onclick="app.navigateToShop('Mangalsutras')">Modern Mangalsutras</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Customer Care</h4>
+          <ul class="footer-links-list">
+            <li><a href="#" onclick="app.openTrackingModal(); return false;">Track Your Order</a></li>
+            <li><a href="#" onclick="app.openAccountModal(); return false;">Customer Account & Orders</a></li>
+            <li><a href="#" onclick="app.openSizeGuide(); return false;">Ring & Bangle Size Guide</a></li>
+            <li><a href="#" onclick="app.showToast('Insured shipping takes 2-4 business days.'); return false;">Shipping & Insured Courier</a></li>
+            <li><a href="#" onclick="app.showToast('7-Day full refund with doorstep pickup.'); return false;">7-Day Easy Returns</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="footer-col-title">Contact & Support</h4>
+          <p style="font-size: 0.8rem; color: #9E9992; line-height: 1.7; margin-bottom: 0.8rem;">
+            <strong>Customer Helpline:</strong><br>
+            1800-266-0123 (Toll Free)<br>
+            care@amberandshine.com
+          </p>
+          <p style="font-size: 0.8rem; color: #9E9992; line-height: 1.7;">
+            <strong>Hours:</strong> Mon - Sun, 9:30 AM - 8:30 PM
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom-row">
+        <span>© 2026 AMBER & SHINE FINE JEWELLERY LTD. ALL RIGHTS RESERVED.</span>
+        <div style="display: flex; gap: 1.5rem; color: #78736C;">
+          <span>UPI / NetBanking</span>
+          <span>Visa & Mastercard</span>
+          <span>No-Cost EMI Available</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MOBILE NAVIGATION OFF-CANVAS DRAWER
+       ========================================================================== -->
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-nav-backdrop" onclick="app.closeMobileNav()"></div>
+    <div class="mobile-nav-content">
+      <div class="mobile-nav-header">
+        <div class="brand-logo-wrap" onclick="app.closeMobileNav(); app.navigateTo('home');">
+          <span class="brand-title" style="font-size: 1.35rem;">Amber & Shine</span>
+          <span class="brand-subtitle" style="font-size: 0.62rem;">Modern Fine Jewellery</span>
+        </div>
+        <button type="button" class="drawer-close-btn" onclick="app.closeMobileNav()">
+          <i data-lucide="x" size="20"></i>
+        </button>
+      </div>
+
+      <!-- Pincode Banner inside mobile menu -->
+      <div class="mobile-nav-pincode" onclick="app.closeMobileNav(); app.openPincodeModal();">
+        <i data-lucide="map-pin" size="14" style="color: var(--brand-coral);"></i>
+        <span id="mobilePincodeText">Deliver to: 400001 (Change)</span>
+      </div>
+
+      <!-- Categories Links List -->
+      <div class="mobile-nav-links">
+        <div class="mobile-nav-section-title">Jewellery Collections</div>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('all');">
+          <span>✦ All Jewellery</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Rings');">
+          <span>Fine Rings</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Earrings');">
+          <span>Solitaire Earrings</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Pendants');">
+          <span>Pendants & Chains</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Bracelets');">
+          <span>Bracelets & Bangles</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Mangalsutras');">
+          <span>Modern Mangalsutras</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#shop" class="mobile-nav-item" onclick="app.closeMobileNav(); app.navigateToShop('Solitaires');">
+          <span>Solitaires Edit</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#home" class="mobile-nav-item" onclick="app.closeMobileNav(); app.scrollToSection('gifting-section');">
+          <span>Curated Gifting</span>
+          <span class="offer-tag-pill">HOT</span>
+        </a>
+
+        <div class="mobile-nav-section-title" style="margin-top: 1rem;">Customer Services</div>
+        <a href="#" class="mobile-nav-item" onclick="app.closeMobileNav(); app.openTrackingModal(); return false;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="truck" size="15"></i> Track Your Order</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#" class="mobile-nav-item" onclick="app.closeMobileNav(); app.openAccountModal(); return false;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="user" size="15"></i> My Account & Orders</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+        <a href="#" class="mobile-nav-item" onclick="app.closeMobileNav(); app.openSizeGuide(); return false;">
+          <span style="display: flex; align-items: center; gap: 0.5rem;"><i data-lucide="ruler" size="15"></i> Size Guide</span>
+          <i data-lucide="chevron-right" size="16"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       STICKY BOTTOM MOBILE NAVIGATION BAR
+       ========================================================================== -->
+  <nav class="bottom-mobile-nav">
+    <button type="button" class="bottom-nav-item active" id="bottomNavHome" onclick="app.navigateTo('home')">
+      <i data-lucide="home" size="20"></i>
+      <span>Home</span>
+    </button>
+    <button type="button" class="bottom-nav-item" id="bottomNavShop" onclick="app.navigateToShop('all')">
+      <i data-lucide="sparkles" size="20"></i>
+      <span>Shop</span>
+    </button>
+    <button type="button" class="bottom-nav-item" onclick="app.toggleMobileSearchBar()">
+      <i data-lucide="search" size="20"></i>
+      <span>Search</span>
+    </button>
+    <button type="button" class="bottom-nav-item" onclick="app.openWishlistDrawer()">
+      <div style="position: relative; display: inline-block;">
+        <i data-lucide="heart" size="20"></i>
+        <span class="bottom-badge" id="bottomWishlistBadge" style="display: none;">0</span>
+      </div>
+      <span>Wishlist</span>
+    </button>
+    <button type="button" class="bottom-nav-item" onclick="app.openCartDrawer()">
+      <div style="position: relative; display: inline-block;">
+        <i data-lucide="shopping-bag" size="20"></i>
+        <span class="bottom-badge" id="bottomCartBadge" style="display: none;">0</span>
+      </div>
+      <span>Bag</span>
+    </button>
+  </nav>
+
+  <!-- ==========================================================================
+       SCRIPTS (DIRECTLY IN ROOT FOLDER)
+       ========================================================================== -->
+  <script src="products.js"></script>
+  <script src="cart.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

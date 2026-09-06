@@ -1,0 +1,1729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — Amber & Shine Fine Jewellery</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>👑</text></svg>">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ==========================================================================
+       AMBER & SHINE - LUXURY ADMIN DASHBOARD STYLES
+       ========================================================================== */
+    :root {
+      --admin-sidebar-w: 260px;
+      --admin-header-h: 68px;
+      --admin-bg: #F8F6F2;
+      --admin-card-bg: #FFFFFF;
+      --admin-border: #E8E3DA;
+      --admin-text-main: #1C1B1A;
+      --admin-text-sub: #7A746B;
+      --admin-accent: #C5A880;
+      --admin-coral: #E07A5F;
+      --admin-green: #1B7943;
+      --admin-red: #C5221F;
+      --admin-amber: #B05A00;
+    }
+
+    body.admin-body {
+      background: var(--admin-bg);
+      color: var(--admin-text-main);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* Guard / Login / Denied Screens */
+    .admin-gate-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      background: radial-gradient(circle at top, #FFFDFB 0%, #F4EFEA 100%);
+    }
+
+    .admin-gate-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-sm);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+      width: 100%;
+      max-width: 440px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+    }
+
+    .admin-gate-logo {
+      font-family: var(--font-heading);
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      color: var(--admin-text-main);
+      text-transform: uppercase;
+      margin-bottom: 0.2rem;
+    }
+
+    .admin-gate-subtitle {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--admin-accent);
+      font-weight: 600;
+      margin-bottom: 1.8rem;
+    }
+
+    /* Admin App Layout */
+    .admin-app-layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .admin-sidebar {
+      width: var(--admin-sidebar-w);
+      background: #181716;
+      color: #E8E3DA;
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .admin-sidebar-header {
+      padding: 1.5rem 1.4rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .admin-sidebar-brand {
+      font-family: var(--font-heading);
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #FFFFFF;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .admin-sidebar-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--admin-accent);
+      background: rgba(197, 168, 128, 0.15);
+      padding: 0.2rem 0.5rem;
+      border-radius: 999px;
+      margin-top: 0.25rem;
+    }
+
+    .admin-nav-menu {
+      flex: 1;
+      padding: 1rem 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      overflow-y: auto;
+    }
+
+    .admin-nav-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0.75rem 1rem;
+      color: #B5AFA6;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-xs);
+      font-size: 0.84rem;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      width: 100%;
+      transition: all 0.2s ease;
+    }
+
+    .admin-nav-btn:hover {
+      background: rgba(255,255,255,0.05);
+      color: #FFFFFF;
+    }
+
+    .admin-nav-btn.active {
+      background: linear-gradient(90deg, rgba(197, 168, 128, 0.25) 0%, rgba(197, 168, 128, 0.08) 100%);
+      color: #FFFFFF;
+      font-weight: 600;
+      border-left: 3px solid var(--admin-accent);
+    }
+
+    .admin-sidebar-footer {
+      padding: 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.76rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    /* Main Content */
+    .admin-main {
+      flex: 1;
+      margin-left: var(--admin-sidebar-w);
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .admin-top-header {
+      height: var(--admin-header-h);
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--admin-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 90;
+    }
+
+    .admin-content-area {
+      padding: 2rem;
+      flex: 1;
+    }
+
+    /* Cards & Stats */
+    .admin-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-bottom: 2rem;
+    }
+
+    .admin-stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-xs);
+      padding: 1.4rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .admin-stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+    }
+
+    .admin-stat-title {
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--admin-text-sub);
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .admin-stat-value {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+      line-height: 1.1;
+    }
+
+    .admin-stat-sub {
+      font-size: 0.74rem;
+      margin-top: 0.45rem;
+      color: var(--admin-text-sub);
+    }
+
+    /* Table Component */
+    .admin-card {
+      background: #FFFFFF;
+      border: 1px solid var(--admin-border);
+      border-radius: var(--radius-xs);
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+      margin-bottom: 2rem;
+    }
+
+    .admin-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--admin-border);
+    }
+
+    .admin-card-title {
+      font-family: var(--font-heading);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .admin-table-wrap {
+      overflow-x: auto;
+      width: 100%;
+    }
+
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.84rem;
+      text-align: left;
+    }
+
+    .admin-table th {
+      background: #FAF8F5;
+      color: var(--admin-text-sub);
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--admin-border);
+      white-space: nowrap;
+    }
+
+    .admin-table td {
+      padding: 0.95rem 1rem;
+      border-bottom: 1px solid #EFECE6;
+      vertical-align: middle;
+    }
+
+    .admin-table tr:hover td {
+      background: #FDFBF8;
+    }
+
+    /* Status Pills */
+    .admin-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: capitalize;
+    }
+
+    .pill-active { background: #E6F4EA; color: #1B7943; }
+    .pill-hidden { background: #F1EFEA; color: #665F55; }
+    .pill-oos { background: #FCE8E6; color: #C5221F; }
+    .pill-low { background: #FEF7E0; color: #B05A00; }
+    .pill-archived { background: #E8E6E2; color: #78736B; }
+
+    /* Admin Action Buttons */
+    .admin-action-btn {
+      background: transparent;
+      border: 1px solid var(--admin-border);
+      color: var(--admin-text-main);
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-xs);
+      font-size: 0.76rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .admin-action-btn:hover {
+      background: #FAF8F5;
+      border-color: #B5AFA6;
+    }
+
+    .admin-action-btn.danger {
+      color: var(--admin-red);
+      border-color: rgba(197, 34, 31, 0.25);
+    }
+    .admin-action-btn.danger:hover {
+      background: #FCE8E6;
+      border-color: var(--admin-red);
+    }
+
+    /* Modal Styling */
+    .admin-modal-backdrop {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(18, 17, 16, 0.75);
+      backdrop-filter: blur(4px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .admin-modal-backdrop.open {
+      display: flex;
+    }
+
+    .admin-modal-sheet {
+      background: #FFFFFF;
+      border-radius: var(--radius-sm);
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+      border: 1px solid var(--admin-border);
+      padding: 2rem;
+      position: relative;
+    }
+
+    /* Mobile Drawer */
+    .admin-mobile-toggle {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--admin-text-main);
+      cursor: pointer;
+      padding: 0.4rem;
+    }
+
+    @media (max-width: 900px) {
+      .admin-sidebar {
+        transform: translateX(-100%);
+      }
+      .admin-sidebar.open {
+        transform: translateX(0);
+      }
+      .admin-main {
+        margin-left: 0;
+      }
+      .admin-mobile-toggle {
+        display: block;
+      }
+      .admin-content-area {
+        padding: 1.2rem;
+      }
+      .admin-top-header {
+        padding: 0 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body class="admin-body">
+
+  <!-- ==========================================================================
+       SCREEN 1: ACCESS DENIED BARRIER (FOR CUSTOMERS TRYING TO ACCESS /admin)
+       ========================================================================== -->
+  <div id="adminAccessDeniedSection" class="admin-gate-wrap" style="display: none;">
+    <div class="admin-gate-card">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: #FCE8E6; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: var(--admin-red);">
+        <i data-lucide="shield-alert" size="32"></i>
+      </div>
+      <div class="admin-gate-logo">Amber & Shine</div>
+      <div class="admin-gate-subtitle" style="color: var(--admin-red);">Security Authorization Barrier</div>
+      
+      <h2 style="font-family: var(--font-heading); font-size: 1.6rem; color: var(--admin-red); margin-bottom: 0.75rem;">
+        Access Denied
+      </h2>
+      <p style="font-size: 0.88rem; color: var(--admin-text-sub); line-height: 1.6; margin-bottom: 1.5rem;" id="accessDeniedDetail">
+        Access denied. Administrator privileges are required.
+      </p>
+
+      <div style="background: #FAF8F5; border: 1px dashed var(--admin-border); padding: 0.85rem; border-radius: var(--radius-xs); font-size: 0.8rem; margin-bottom: 1.8rem; color: var(--admin-text-main);">
+        Current Session: <strong id="deniedUserEmail">customer@example.com</strong><br>
+        Role: <span class="admin-pill pill-hidden" style="margin-top: 0.3rem;">customer</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+        <a href="index.html" class="btn btn-primary" style="display: block; text-align: center; text-decoration: none; padding: 0.8rem;">
+          RETURN TO PUBLIC STOREFRONT
+        </a>
+        <button type="button" class="btn btn-outline" style="width: 100%; padding: 0.8rem;" onclick="adminApp.handleSignOutToLogin()">
+          SIGN OUT & SIGN IN WITH ADMIN ACCOUNT
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 2: DEDICATED ADMIN AUTHENTICATION (LOGIN)
+       ========================================================================== -->
+  <div id="adminAuthSection" class="admin-gate-wrap" style="display: none;">
+    <div class="admin-gate-card">
+      <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(197, 168, 128, 0.15); border: 1px solid var(--admin-accent); display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; color: var(--admin-accent);">
+        <i data-lucide="lock" size="28"></i>
+      </div>
+      <div class="admin-gate-logo">Amber & Shine</div>
+      <div class="admin-gate-subtitle">Atelier Administration Access</div>
+      
+      <p style="font-size: 0.84rem; color: var(--admin-text-sub); margin-bottom: 1.6rem; line-height: 1.5;">
+        Secure administrative portal. Please authenticate with your registered executive credentials.
+      </p>
+
+      <div id="adminLoginError" class="auth-error-banner" style="display: none; margin-bottom: 1.2rem;"></div>
+
+      <form id="adminLoginForm" onsubmit="adminApp.handleAdminLogin(event)" style="display: flex; flex-direction: column; gap: 1rem; text-align: left;">
+        <div>
+          <label class="admin-field-label">Administrator Email *</label>
+          <input type="email" id="adminAuthEmail" name="adminEmail" required placeholder="admin@amberandshine.com" class="admin-input" autocomplete="username">
+        </div>
+        <div>
+          <label class="admin-field-label">Password *</label>
+          <input type="password" id="adminAuthPassword" name="adminPassword" required placeholder="••••••••••••" class="admin-input" autocomplete="current-password">
+        </div>
+        <button type="submit" id="adminAuthSubmitBtn" class="btn btn-coral" style="width: 100%; margin-top: 0.5rem; padding: 0.85rem; font-size: 0.84rem; letter-spacing: 0.08em;">
+          AUTHENTICATE & ENTER DASHBOARD
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px solid var(--admin-border); font-size: 0.74rem; color: var(--admin-text-sub);">
+        <a href="index.html" style="color: var(--admin-text-sub); text-decoration: none;">← Return to Storefront</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SCREEN 3: AUTHORIZED LUXURY ADMIN DASHBOARD
+       ========================================================================== -->
+  <div id="adminDashboardSection" class="admin-app-layout" style="display: none;">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="adminSidebar">
+      <div class="admin-sidebar-header">
+        <div>
+          <div class="admin-sidebar-brand">Amber & Shine</div>
+          <span class="admin-sidebar-tag">Executive Suite</span>
+        </div>
+        <button type="button" class="admin-mobile-toggle" onclick="adminApp.toggleSidebar()" style="color: #fff;">
+          <i data-lucide="x" size="20"></i>
+        </button>
+      </div>
+
+      <nav class="admin-nav-menu">
+        <button type="button" class="admin-nav-btn active" data-tab="overview" onclick="adminApp.switchTab('overview')">
+          <i data-lucide="layout-dashboard" size="18"></i>
+          <span>Dashboard Overview</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="products" onclick="adminApp.switchTab('products')">
+          <i data-lucide="gem" size="18"></i>
+          <span>Product Catalog</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="inventory" onclick="adminApp.switchTab('inventory')">
+          <i data-lucide="boxes" size="18"></i>
+          <span>Inventory & Stock</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="categories" onclick="adminApp.switchTab('categories')">
+          <i data-lucide="tags" size="18"></i>
+          <span>Categories</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="orders" onclick="adminApp.switchTab('orders')">
+          <i data-lucide="shopping-bag" size="18"></i>
+          <span>Customer Orders</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="customers" onclick="adminApp.switchTab('customers')">
+          <i data-lucide="users" size="18"></i>
+          <span>Patron Directory</span>
+        </button>
+        <button type="button" class="admin-nav-btn" data-tab="logs" onclick="adminApp.switchTab('logs')">
+          <i data-lucide="clipboard-list" size="18"></i>
+          <span>Activity Audit Log</span>
+        </button>
+      </nav>
+
+      <div class="admin-sidebar-footer">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <div style="width: 32px; height: 32px; border-radius: 50%; background: var(--admin-accent); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700;">
+            A
+          </div>
+          <div style="min-width: 0; flex: 1;">
+            <div style="font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" id="sidebarAdminName">Administrator</div>
+            <div style="font-size: 0.68rem; color: #9E9992;" id="sidebarAdminEmail">admin@amberandshine.com</div>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.4rem; margin-top: 0.4rem;">
+          <a href="index.html" class="admin-action-btn" style="flex: 1; justify-content: center; color: #B5AFA6; border-color: rgba(255,255,255,0.15); text-decoration: none;">
+            <i data-lucide="external-link" size="12"></i> Store
+          </a>
+          <button type="button" class="admin-action-btn danger" style="flex: 1; justify-content: center;" onclick="adminApp.handleLogout()">
+            <i data-lucide="log-out" size="12"></i> Sign Out
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Workspace -->
+    <div class="admin-main">
+      <!-- Top Header -->
+      <header class="admin-top-header">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button type="button" class="admin-mobile-toggle" onclick="adminApp.toggleSidebar()">
+            <i data-lucide="menu" size="22"></i>
+          </button>
+          <div>
+            <h2 style="font-family: var(--font-heading); font-size: 1.4rem; margin: 0;" id="adminPageHeaderTitle">Dashboard Overview</h2>
+            <div style="font-size: 0.74rem; color: var(--admin-text-sub);" id="adminLiveDateStr">Loading...</div>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 0.8rem;">
+          <button type="button" class="btn btn-coral" style="padding: 0.5rem 1rem; font-size: 0.78rem;" onclick="adminApp.openAddProductModal()">
+            <i data-lucide="plus" size="14"></i> Add Product
+          </button>
+          <a href="index.html" class="btn btn-outline" style="padding: 0.5rem 0.9rem; font-size: 0.78rem; text-decoration: none;">
+            View Public Store
+          </a>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <main class="admin-content-area">
+
+        <!-- TAB 1: OVERVIEW -->
+        <section id="tab-overview" class="admin-tab-pane">
+          <div class="admin-stats-grid">
+            <div class="admin-stat-card">
+              <div class="admin-stat-title">Total Active Products</div>
+              <div class="admin-stat-value" id="statActiveProducts">0</div>
+              <div class="admin-stat-sub" id="statTotalProductsSub">0 Total in Catalog</div>
+            </div>
+            <div class="admin-stat-card">
+              <div class="admin-stat-title">Out of Stock & Low Stock</div>
+              <div class="admin-stat-value" style="color: var(--admin-amber);" id="statStockAlerts">0</div>
+              <div class="admin-stat-sub" id="statLowStockSub">0 Low, 0 Out of Stock</div>
+            </div>
+            <div class="admin-stat-card">
+              <div class="admin-stat-title">Total Orders Placed</div>
+              <div class="admin-stat-value" id="statTotalOrders">0</div>
+              <div class="admin-stat-sub" id="statPendingOrdersSub">0 In Preparation</div>
+            </div>
+            <div class="admin-stat-card">
+              <div class="admin-stat-title">Gross Revenue (₹)</div>
+              <div class="admin-stat-value" style="color: #1B7943;" id="statGrossRevenue">₹0</div>
+              <div class="admin-stat-sub">Paid & Verified Escrow</div>
+            </div>
+          </div>
+
+          <!-- Two Column Widgets -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+            <!-- Recent Orders -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h3 class="admin-card-title">Recent Patron Orders</h3>
+                <button type="button" class="admin-action-btn" onclick="adminApp.switchTab('orders')">View All Orders →</button>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Order ID</th>
+                      <th>Patron</th>
+                      <th>Total</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewRecentOrdersBody">
+                    <tr><td colspan="4" style="text-align: center; color: var(--admin-text-sub);">Loading orders...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Recently Added Products -->
+            <div class="admin-card">
+              <div class="admin-card-header">
+                <h3 class="admin-card-title">Recently Added Pieces</h3>
+                <button type="button" class="admin-action-btn" onclick="adminApp.switchTab('products')">View Catalog →</button>
+              </div>
+              <div class="admin-table-wrap">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Piece</th>
+                      <th>Category</th>
+                      <th>Price</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="overviewRecentProductsBody">
+                    <tr><td colspan="4" style="text-align: center; color: var(--admin-text-sub);">Loading products...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: PRODUCT CATALOG -->
+        <section id="tab-products" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Atelier Jewellery Catalog</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Manage product specifications, pricing, visibility, and high-resolution imagery.
+                </div>
+              </div>
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <input type="text" id="productSearchInput" placeholder="Search piece or SKU..." class="admin-input" style="width: 200px; padding: 0.45rem 0.8rem; font-size: 0.8rem;" oninput="adminApp.filterProducts()">
+                <select id="productCategoryFilter" class="admin-input" style="width: 150px; padding: 0.45rem 0.8rem; font-size: 0.8rem;" onchange="adminApp.filterProducts()">
+                  <option value="All">All Categories</option>
+                  <option value="Rings">Rings</option>
+                  <option value="Earrings">Earrings</option>
+                  <option value="Pendants">Pendants</option>
+                  <option value="Bracelets">Bracelets & Bangles</option>
+                  <option value="Necklaces">Necklaces & Chains</option>
+                  <option value="Mangalsutras">Modern Mangalsutras</option>
+                </select>
+                <select id="productStatusFilter" class="admin-input" style="width: 140px; padding: 0.45rem 0.8rem; font-size: 0.8rem;" onchange="adminApp.filterProducts()">
+                  <option value="All">All Statuses</option>
+                  <option value="Active">Active</option>
+                  <option value="Hidden">Hidden</option>
+                  <option value="Out of Stock">Out of Stock</option>
+                  <option value="Archived">Archived</option>
+                </select>
+                <button type="button" class="btn btn-coral" style="padding: 0.45rem 0.9rem; font-size: 0.78rem;" onclick="adminApp.openAddProductModal()">
+                  + Add Product
+                </button>
+              </div>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Piece & Image</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Status</th>
+                    <th>Visibility</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminProductsTableBody">
+                  <tr><td colspan="8" style="text-align: center; padding: 2rem;">Loading catalog...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: INVENTORY -->
+        <section id="tab-inventory" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Inventory & Stock Controls</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Real-time warehouse stock tracking with automated low-stock and out-of-stock warning thresholds.
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Piece</th>
+                    <th>SKU</th>
+                    <th>Current Stock</th>
+                    <th>Alert Status</th>
+                    <th>Threshold</th>
+                    <th>Quick Stock Adjustment</th>
+                  </tr>
+                </thead>
+                <tbody id="adminInventoryTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading inventory...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: CATEGORIES -->
+        <section id="tab-categories" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Collections & Categories</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Configure category groupings, banner visuals, and live storefront navigation pills.
+                </div>
+              </div>
+              <button type="button" class="btn btn-coral" style="padding: 0.45rem 0.9rem; font-size: 0.78rem;" onclick="adminApp.openAddCategoryModal()">
+                + Add Category
+              </button>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Category Name</th>
+                    <th>Filter Tag</th>
+                    <th>Badge / Count</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCategoriesTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading categories...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: ORDERS -->
+        <section id="tab-orders" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Customer Order Management</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Track shipments, update dispatch stages, and manage BlueDart courier manifests.
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>Patron Name & Email</th>
+                    <th>Items</th>
+                    <th>Total</th>
+                    <th>Payment</th>
+                    <th>Current Stage</th>
+                    <th>Update Order Stage</th>
+                  </tr>
+                </thead>
+                <tbody id="adminOrdersTableBody">
+                  <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading orders...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: CUSTOMERS -->
+        <section id="tab-customers" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Registered Patrons Directory</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Clientele roster and VIP tier history. Sensitive credentials (passwords/salts) are strictly protected.
+                </div>
+              </div>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Patron Name</th>
+                    <th>Email</th>
+                    <th>VIP Tier</th>
+                    <th>Joined Date</th>
+                    <th>Total Orders</th>
+                    <th>Lifetime Spend</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminCustomersTableBody">
+                  <tr><td colspan="7" style="text-align: center; padding: 2rem;">Loading patron directory...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 7: ACTIVITY LOG -->
+        <section id="tab-logs" class="admin-tab-pane" style="display: none;">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <div>
+                <h3 class="admin-card-title">Executive Activity Audit Trail</h3>
+                <div style="font-size: 0.78rem; color: var(--admin-text-sub); margin-top: 0.2rem;">
+                  Immutable timestamped ledger of administrative actions, pricing alterations, and catalog edits.
+                </div>
+              </div>
+              <button type="button" class="admin-action-btn" onclick="adminApp.loadLogs()">
+                <i data-lucide="refresh-cw" size="13"></i> Refresh Logs
+              </button>
+            </div>
+
+            <div class="admin-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>Administrator</th>
+                    <th>Action</th>
+                    <th>Entity Type</th>
+                    <th>Entity ID</th>
+                    <th>Audit Details</th>
+                  </tr>
+                </thead>
+                <tbody id="adminLogsTableBody">
+                  <tr><td colspan="6" style="text-align: center; padding: 2rem;">Loading audit logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL: ADD / EDIT PRODUCT
+       ========================================================================== -->
+  <div class="admin-modal-backdrop" id="productModalBackdrop">
+    <div class="admin-modal-sheet">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h3 class="admin-card-title" id="productModalTitle">Add New Jewellery Piece</h3>
+        <button type="button" class="modal-close-btn" onclick="adminApp.closeProductModal()"><i data-lucide="x"></i></button>
+      </div>
+
+      <form id="productForm" onsubmit="adminApp.handleSaveProduct(event)" class="admin-form-grid">
+        <input type="hidden" id="modalProdId">
+        
+        <div class="full-span">
+          <label class="admin-field-label">Piece Name *</label>
+          <input type="text" id="modalProdName" required placeholder="e.g. Lumina Solitaire Ring" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Category *</label>
+          <select id="modalProdCategory" required class="admin-input">
+            <option value="Rings">Rings</option>
+            <option value="Earrings">Earrings</option>
+            <option value="Pendants">Pendants</option>
+            <option value="Bracelets">Bracelets & Bangles</option>
+            <option value="Necklaces">Necklaces & Chains</option>
+            <option value="Mangalsutras">Modern Mangalsutras</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="admin-field-label">Stock Keeping Unit (SKU) *</label>
+          <input type="text" id="modalProdSku" required placeholder="AS-RNG-009" class="admin-input" style="text-transform: uppercase;">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Selling Price (₹) *</label>
+          <input type="number" id="modalProdPrice" required min="1" placeholder="18500" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Original Price (₹)</label>
+          <input type="number" id="modalProdOrigPrice" placeholder="21500" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Warehouse Stock Units *</label>
+          <input type="number" id="modalProdStock" required min="0" value="10" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Low Stock Threshold</label>
+          <input type="number" id="modalProdThreshold" min="1" value="5" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Material / Finish</label>
+          <input type="text" id="modalProdMaterial" placeholder="Warm Amber Tone" value="Warm Amber Tone" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Jewellery Type / Collection</label>
+          <input type="text" id="modalProdType" placeholder="Solitaire / Minimalist" value="Everyday Luxury" class="admin-input">
+        </div>
+
+        <div>
+          <label class="admin-field-label">Product Status *</label>
+          <select id="modalProdStatus" required class="admin-input">
+            <option value="Active">Active (Visible on Storefront)</option>
+            <option value="Hidden">Hidden (Storefront Hidden)</option>
+            <option value="Out of Stock">Out of Stock</option>
+            <option value="Archived">Archived</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="admin-field-label">Featured Piece Toggle</label>
+          <select id="modalProdFeatured" class="admin-input">
+            <option value="0">Standard Listing</option>
+            <option value="1">Featured in Showcase</option>
+          </select>
+        </div>
+
+        <div class="full-span">
+          <label class="admin-field-label">Badge Tag (e.g. BESTSELLER, NEW IN)</label>
+          <input type="text" id="modalProdBadge" placeholder="NEW ARRIVAL" value="NEW ARRIVAL" class="admin-input">
+        </div>
+
+        <div class="full-span">
+          <label class="admin-field-label">Description *</label>
+          <textarea id="modalProdDesc" rows="3" required placeholder="Handcrafted luxury piece designed for contemporary everyday wear." class="admin-input">Handcrafted in solid precious metal with mirror finish and certified gemstones.</textarea>
+        </div>
+
+        <!-- Product Image Management (Requirement 9) -->
+        <div class="full-span" style="background: #FAF8F5; padding: 1.2rem; border-radius: var(--radius-xs); border: 1px dashed var(--admin-border);">
+          <label class="admin-field-label" style="display: flex; justify-content: space-between; align-items: center;">
+            <span>Product Imagery (Backend Stored)</span>
+            <span style="font-size: 0.72rem; color: var(--admin-text-sub);">Upload or enter image URL</span>
+          </label>
+          
+          <div style="display: flex; gap: 0.5rem; margin-bottom: 0.8rem;">
+            <input type="url" id="modalProdImageUrl" placeholder="https://images.unsplash.com/..." class="admin-input" style="flex: 1;">
+            <button type="button" class="btn btn-outline" style="padding: 0.5rem 0.8rem; font-size: 0.76rem;" onclick="adminApp.addImageFromUrl()">Add URL</button>
+          </div>
+
+          <div style="margin-bottom: 0.8rem;">
+            <input type="file" id="modalProdImageFile" accept="image/*" style="font-size: 0.78rem;" onchange="adminApp.handleImageFileUpload(event)">
+            <span id="uploadStatusText" style="font-size: 0.72rem; color: var(--admin-coral); margin-left: 0.5rem;"></span>
+          </div>
+
+          <!-- Image Preview Strip -->
+          <div id="modalImagesPreviewStrip" style="display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.5rem;"></div>
+        </div>
+
+        <div class="full-span" style="display: flex; gap: 0.8rem; margin-top: 1rem;">
+          <button type="submit" id="saveProductBtn" class="btn btn-coral" style="flex: 1; padding: 0.8rem;">
+            SAVE PRODUCT TO STORE
+          </button>
+          <button type="button" class="btn btn-outline" onclick="adminApp.closeProductModal()" style="padding: 0.8rem 1.4rem;">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="adminToastContainer"></div>
+
+  <!-- ==========================================================================
+       ADMIN APP CONTROLLER LOGIC
+       ========================================================================== -->
+  <script>
+    class LuxuryAdminApp {
+      constructor() {
+        this.apiBase = (window.location.protocol === "file:" || !window.location.origin.includes(":8000"))
+          ? "http://127.0.0.1:8000"
+          : "";
+        this.tokenKey = "ambershine_session_token";
+        this.admin = null;
+        this.currentTab = "overview";
+        this.products = [];
+        this.modalImages = [];
+
+        this.init();
+      }
+
+      getToken() {
+        try {
+          return localStorage.getItem(this.tokenKey) || localStorage.getItem("ambershine_token");
+        } catch (e) {
+          return null;
+        }
+      }
+
+      setToken(token) {
+        try {
+          if (token) localStorage.setItem(this.tokenKey, token);
+          else localStorage.removeItem(this.tokenKey);
+        } catch (e) {}
+      }
+
+      async apiCall(endpoint, method = "GET", body = null) {
+        const token = this.getToken();
+        const headers = { "Content-Type": "application/json" };
+        if (token) headers["Authorization"] = `Bearer ${token}`;
+
+        const opts = { method, headers };
+        if (body) opts.body = JSON.stringify(body);
+
+        const res = await fetch(`${this.apiBase}${endpoint}`, opts);
+        let data = {};
+        try { data = await res.json(); } catch (e) {}
+        return { status: res.status, ok: res.ok, data };
+      }
+
+      async init() {
+        // Update live header date
+        const dateEl = document.getElementById("adminLiveDateStr");
+        if (dateEl) {
+          dateEl.textContent = new Date().toLocaleDateString("en-IN", {
+            weekday: "long", day: "2-digit", month: "short", year: "numeric"
+          });
+        }
+
+        // Verify Authentication & RBAC on load
+        await this.verifyAdminSession();
+
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+          window.lucide.createIcons();
+        }
+      }
+
+      async verifyAdminSession() {
+        const token = this.getToken();
+        if (!token) {
+          this.showAuthScreen();
+          return;
+        }
+
+        const { status, ok, data } = await this.apiCall("/api/auth/me");
+        if (!ok || !data.user) {
+          this.setToken(null);
+          this.showAuthScreen();
+          return;
+        }
+
+        const user = data.user;
+        // Requirement 2: Strict role verification on frontend and backend
+        if (user.role !== "admin") {
+          this.showAccessDeniedScreen(user);
+          return;
+        }
+
+        // Authenticated Admin!
+        this.admin = user;
+        this.showDashboardScreen();
+        await this.loadAllDashboardData();
+      }
+
+      showAuthScreen() {
+        document.getElementById("adminAccessDeniedSection").style.display = "none";
+        document.getElementById("adminDashboardSection").style.display = "none";
+        document.getElementById("adminAuthSection").style.display = "flex";
+        this.refreshIcons();
+      }
+
+      showAccessDeniedScreen(user) {
+        document.getElementById("adminAuthSection").style.display = "none";
+        document.getElementById("adminDashboardSection").style.display = "none";
+        document.getElementById("adminAccessDeniedSection").style.display = "flex";
+        
+        const emailEl = document.getElementById("deniedUserEmail");
+        if (emailEl) emailEl.textContent = user.email || "customer@example.com";
+        this.refreshIcons();
+      }
+
+      showDashboardScreen() {
+        document.getElementById("adminAuthSection").style.display = "none";
+        document.getElementById("adminAccessDeniedSection").style.display = "none";
+        document.getElementById("adminDashboardSection").style.display = "flex";
+
+        if (this.admin) {
+          document.getElementById("sidebarAdminName").textContent = this.admin.name || "Administrator";
+          document.getElementById("sidebarAdminEmail").textContent = this.admin.email || "admin@amberandshine.com";
+        }
+        this.refreshIcons();
+      }
+
+      async handleAdminLogin(e) {
+        e.preventDefault();
+        const errBox = document.getElementById("adminLoginError");
+        const submitBtn = document.getElementById("adminAuthSubmitBtn");
+        const email = document.getElementById("adminAuthEmail").value.trim();
+        const password = document.getElementById("adminAuthPassword").value;
+
+        if (errBox) errBox.style.display = "none";
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = "VERIFYING AUTHORIZATION...";
+        }
+
+        try {
+          const { status, ok, data } = await this.apiCall("/api/admin/login", "POST", { email, password });
+          if (!ok) {
+            if (errBox) {
+              errBox.textContent = data.error || "Authentication failed. Access denied.";
+              errBox.style.display = "block";
+            }
+            return;
+          }
+
+          this.setToken(data.token);
+          this.admin = data.user;
+          this.showDashboardScreen();
+          this.showToast(`Authorized session verified. Welcome, ${data.user.name}!`);
+          await this.loadAllDashboardData();
+        } catch (err) {
+          if (errBox) {
+            errBox.textContent = "Network error connecting to backend service.";
+            errBox.style.display = "block";
+          }
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = "AUTHENTICATE & ENTER DASHBOARD";
+          }
+        }
+      }
+
+      async handleLogout() {
+        await this.apiCall("/api/auth/logout", "POST");
+        this.setToken(null);
+        this.admin = null;
+        this.showToast("Admin session locked. Logged out.");
+        this.showAuthScreen();
+      }
+
+      handleSignOutToLogin() {
+        this.setToken(null);
+        this.showAuthScreen();
+      }
+
+      switchTab(tabName) {
+        this.currentTab = tabName;
+        document.querySelectorAll(".admin-tab-pane").forEach(p => p.style.display = "none");
+        document.querySelectorAll(".admin-nav-btn").forEach(b => b.classList.remove("active"));
+
+        const targetPane = document.getElementById(`tab-${tabName}`);
+        if (targetPane) targetPane.style.display = "block";
+
+        const targetBtn = document.querySelector(`.admin-nav-btn[data-tab="${tabName}"]`);
+        if (targetBtn) targetBtn.classList.add("active");
+
+        const titles = {
+          overview: "Dashboard Overview",
+          products: "Jewellery Catalog & Products",
+          inventory: "Inventory & Warehouse Stock",
+          categories: "Collections & Categories",
+          orders: "Customer Order Tracking",
+          customers: "Registered Patrons Directory",
+          logs: "Executive Activity Audit Trail"
+        };
+        const headerTitle = document.getElementById("adminPageHeaderTitle");
+        if (headerTitle) headerTitle.textContent = titles[tabName] || "Dashboard";
+
+        // Close sidebar on mobile
+        document.getElementById("adminSidebar").classList.remove("open");
+        this.refreshIcons();
+      }
+
+      toggleSidebar() {
+        document.getElementById("adminSidebar").classList.toggle("open");
+      }
+
+      async loadAllDashboardData() {
+        await Promise.all([
+          this.loadStats(),
+          this.loadProducts(),
+          this.loadCategories(),
+          this.loadOrders(),
+          this.loadCustomers(),
+          this.loadLogs()
+        ]);
+      }
+
+      async loadStats() {
+        const { ok, data } = await this.apiCall("/api/admin/stats");
+        if (!ok || !data.stats) return;
+
+        const s = data.stats;
+        document.getElementById("statActiveProducts").textContent = s.activeProducts || 0;
+        document.getElementById("statTotalProductsSub").textContent = `${s.totalProducts || 0} Total in Catalog`;
+        document.getElementById("statStockAlerts").textContent = (s.outOfStockProducts || 0) + (s.lowStockProducts || 0);
+        document.getElementById("statLowStockSub").textContent = `${s.lowStockProducts || 0} Low, ${s.outOfStockProducts || 0} Out of Stock`;
+        document.getElementById("statTotalOrders").textContent = s.totalOrders || 0;
+        document.getElementById("statPendingOrdersSub").textContent = `${s.pendingOrders || 0} Pending Dispatch`;
+        document.getElementById("statGrossRevenue").textContent = "₹" + Number(s.totalRevenue || 0).toLocaleString("en-IN");
+
+        // Overview tables
+        const ordersBody = document.getElementById("overviewRecentOrdersBody");
+        if (ordersBody && data.recentOrders) {
+          if (data.recentOrders.length === 0) {
+            ordersBody.innerHTML = `<tr><td colspan="4" style="text-align:center;">No orders placed yet.</td></tr>`;
+          } else {
+            ordersBody.innerHTML = data.recentOrders.map(o => `
+              <tr>
+                <td><strong>#${o.id}</strong></td>
+                <td>${o.customer_name}</td>
+                <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
+                <td><span class="admin-pill pill-active">${o.status}</span></td>
+              </tr>
+            `).join("");
+          }
+        }
+
+        const prodsBody = document.getElementById("overviewRecentProductsBody");
+        if (prodsBody && data.recentProducts) {
+          prodsBody.innerHTML = data.recentProducts.map(p => `
+            <tr>
+              <td style="display:flex; align-items:center; gap:0.6rem;">
+                <img src="${(p.images && p.images[0]) || ''}" style="width:32px; height:32px; border-radius:4px; object-fit:cover;">
+                <span>${p.name}</span>
+              </td>
+              <td>${p.category}</td>
+              <td><strong>₹${Number(p.price).toLocaleString("en-IN")}</strong></td>
+              <td><span class="admin-pill ${p.status === 'Active' ? 'pill-active' : 'pill-oos'}">${p.status}</span></td>
+            </tr>
+          `).join("");
+        }
+      }
+
+      async loadProducts() {
+        const { ok, data } = await this.apiCall("/api/admin/products");
+        if (!ok || !data.products) return;
+        this.products = data.products;
+        this.renderProductsTable(this.products);
+        this.renderInventoryTable(this.products);
+      }
+
+      renderProductsTable(list) {
+        const tbody = document.getElementById("adminProductsTableBody");
+        if (!tbody) return;
+
+        if (list.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align: center; padding: 2rem;">No products match criteria.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = list.map(p => {
+          const img = (p.images && p.images[0]) || "https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=300&q=85";
+          const statusClass = p.status === "Active" ? "pill-active" : (p.status === "Hidden" ? "pill-hidden" : (p.status === "Out of Stock" ? "pill-oos" : "pill-archived"));
+          return `
+            <tr>
+              <td>
+                <div style="display: flex; align-items: center; gap: 0.8rem;">
+                  <img src="${img}" style="width: 44px; height: 44px; border-radius: var(--radius-xs); object-fit: cover; border: 1px solid var(--admin-border);">
+                  <div>
+                    <div style="font-weight: 700; color: var(--admin-text-main);">${p.name}</div>
+                    <div style="font-size: 0.72rem; color: var(--admin-text-sub);">${p.material || 'Warm Amber Tone'}</div>
+                  </div>
+                </div>
+              </td>
+              <td><code>${p.sku || 'AS-GEN'}</code></td>
+              <td>${p.category}</td>
+              <td>
+                <strong>₹${Number(p.price).toLocaleString("en-IN")}</strong>
+                ${p.original_price && p.original_price > p.price ? `<div style="font-size:0.7rem; color:var(--admin-text-sub); text-decoration:line-through;">₹${Number(p.original_price).toLocaleString("en-IN")}</div>` : ''}
+              </td>
+              <td>
+                <strong>${p.stock}</strong>
+                ${p.stock === 0 ? '<span class="admin-pill pill-oos" style="margin-left:0.3rem;">Out</span>' : (p.stock <= (p.low_stock_threshold || 5) ? '<span class="admin-pill pill-low" style="margin-left:0.3rem;">Low</span>' : '')}
+              </td>
+              <td><span class="admin-pill ${statusClass}">${p.status}</span></td>
+              <td>
+                <button type="button" class="admin-action-btn" onclick="adminApp.quickToggleStatus('${p.id}', '${p.status === 'Active' ? 'Hidden' : 'Active'}')">
+                  ${p.status === 'Active' ? 'Hide' : 'Show'}
+                </button>
+              </td>
+              <td style="text-align: right; white-space: nowrap;">
+                <button type="button" class="admin-action-btn" onclick="adminApp.openEditProductModal('${p.id}')">Edit</button>
+                <button type="button" class="admin-action-btn danger" onclick="adminApp.handleDeleteProduct('${p.id}', '${p.name}')">Delete</button>
+              </td>
+            </tr>
+          `;
+        }).join("");
+        this.refreshIcons();
+      }
+
+      renderInventoryTable(list) {
+        const tbody = document.getElementById("adminInventoryTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = list.map(p => {
+          let badge = '<span class="admin-pill pill-active">In Stock</span>';
+          if (p.stock === 0) badge = '<span class="admin-pill pill-oos">Out of Stock</span>';
+          else if (p.stock <= (p.low_stock_threshold || 5)) badge = `<span class="admin-pill pill-low">Low Stock — ${p.stock} remaining</span>`;
+
+          return `
+            <tr>
+              <td><strong>${p.name}</strong></td>
+              <td><code>${p.sku || 'AS-GEN'}</code></td>
+              <td><span style="font-size: 1.1rem; font-weight: 700;">${p.stock}</span> units</td>
+              <td>${badge}</td>
+              <td>≤ ${p.low_stock_threshold || 5} units</td>
+              <td>
+                <div style="display: flex; gap: 0.35rem; align-items: center;">
+                  <button type="button" class="admin-action-btn" onclick="adminApp.adjustStock('${p.id}', ${p.stock - 1})">-1</button>
+                  <button type="button" class="admin-action-btn" onclick="adminApp.adjustStock('${p.id}', ${p.stock + 1})">+1</button>
+                  <button type="button" class="admin-action-btn" onclick="adminApp.promptCustomStock('${p.id}', ${p.stock})">Set Qty</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      filterProducts() {
+        const search = (document.getElementById("productSearchInput").value || "").toLowerCase().trim();
+        const cat = document.getElementById("productCategoryFilter").value;
+        const status = document.getElementById("productStatusFilter").value;
+
+        let filtered = this.products.filter(p => {
+          const matchSearch = !search || p.name.toLowerCase().includes(search) || (p.sku && p.sku.toLowerCase().includes(search));
+          const matchCat = cat === "All" || p.category === cat;
+          const matchStatus = status === "All" || p.status === status;
+          return matchSearch && matchCat && matchStatus;
+        });
+
+        this.renderProductsTable(filtered);
+      }
+
+      openAddProductModal() {
+        document.getElementById("productModalTitle").textContent = "Add New Fine Jewellery Piece";
+        document.getElementById("modalProdId").value = "";
+        document.getElementById("productForm").reset();
+        this.modalImages = ["https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85"];
+        this.renderModalImagesPreview();
+        document.getElementById("productModalBackdrop").classList.add("open");
+        this.refreshIcons();
+      }
+
+      openEditProductModal(prodId) {
+        const p = this.products.find(x => x.id === prodId);
+        if (!p) return;
+
+        document.getElementById("productModalTitle").textContent = `Edit: ${p.name}`;
+        document.getElementById("modalProdId").value = p.id;
+        document.getElementById("modalProdName").value = p.name || "";
+        document.getElementById("modalProdCategory").value = p.category || "Rings";
+        document.getElementById("modalProdSku").value = p.sku || "";
+        document.getElementById("modalProdPrice").value = p.price || "";
+        document.getElementById("modalProdOrigPrice").value = p.original_price || "";
+        document.getElementById("modalProdStock").value = p.stock || 0;
+        document.getElementById("modalProdThreshold").value = p.low_stock_threshold || 5;
+        document.getElementById("modalProdMaterial").value = p.material || "Warm Amber Tone";
+        document.getElementById("modalProdType").value = p.jewellery_type || "Everyday Luxury";
+        document.getElementById("modalProdStatus").value = p.status || "Active";
+        document.getElementById("modalProdFeatured").value = p.is_featured ? "1" : "0";
+        document.getElementById("modalProdBadge").value = p.badge || "";
+        document.getElementById("modalProdDesc").value = p.description || "";
+
+        this.modalImages = Array.isArray(p.images) && p.images.length > 0 ? [...p.images] : ["https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85"];
+        this.renderModalImagesPreview();
+        document.getElementById("productModalBackdrop").classList.add("open");
+        this.refreshIcons();
+      }
+
+      closeProductModal() {
+        document.getElementById("productModalBackdrop").classList.remove("open");
+      }
+
+      renderModalImagesPreview() {
+        const container = document.getElementById("modalImagesPreviewStrip");
+        if (!container) return;
+        container.innerHTML = this.modalImages.map((url, idx) => `
+          <div style="position: relative; width: 68px; height: 68px; border-radius: var(--radius-xs); border: 1px solid var(--admin-border); overflow: hidden; background: #fff;">
+            <img src="${url}" style="width: 100%; height: 100%; object-fit: cover;">
+            <button type="button" onclick="adminApp.removeModalImage(${idx})" style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.6); color: #fff; border: none; border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; font-size: 10px; cursor: pointer;">✕</button>
+            ${idx === 0 ? '<span style="position: absolute; bottom: 0; left: 0; right: 0; background: var(--admin-accent); color: #fff; font-size: 8px; text-align: center; text-transform: uppercase;">Primary</span>' : ''}
+          </div>
+        `).join("");
+      }
+
+      addImageFromUrl() {
+        const input = document.getElementById("modalProdImageUrl");
+        const url = (input.value || "").trim();
+        if (url) {
+          this.modalImages.push(url);
+          input.value = "";
+          this.renderModalImagesPreview();
+        }
+      }
+
+      async handleImageFileUpload(e) {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const statusEl = document.getElementById("uploadStatusText");
+        if (statusEl) statusEl.textContent = "Uploading image to secure storage...";
+
+        const reader = new FileReader();
+        reader.onload = async (event) => {
+          const base64Data = event.target.result;
+          const { ok, data } = await this.apiCall("/api/admin/upload-image", "POST", {
+            data: base64Data,
+            filename: file.name,
+            mimeType: file.type
+          });
+
+          if (ok && data.imageUrl) {
+            this.modalImages.push(data.imageUrl);
+            this.renderModalImagesPreview();
+            if (statusEl) statusEl.textContent = "Image uploaded successfully!";
+            setTimeout(() => { if (statusEl) statusEl.textContent = ""; }, 2500);
+          } else {
+            if (statusEl) statusEl.textContent = "Upload failed.";
+          }
+        };
+        reader.readAsDataURL(file);
+      }
+
+      removeModalImage(idx) {
+        this.modalImages.splice(idx, 1);
+        this.renderModalImagesPreview();
+      }
+
+      async handleSaveProduct(e) {
+        e.preventDefault();
+        const id = document.getElementById("modalProdId").value;
+        const isEdit = !!id;
+
+        const payload = {
+          name: document.getElementById("modalProdName").value.trim(),
+          category: document.getElementById("modalProdCategory").value,
+          sku: document.getElementById("modalProdSku").value.trim().toUpperCase(),
+          price: parseFloat(document.getElementById("modalProdPrice").value),
+          originalPrice: parseFloat(document.getElementById("modalProdOrigPrice").value || document.getElementById("modalProdPrice").value),
+          stock: parseInt(document.getElementById("modalProdStock").value, 10),
+          lowStockThreshold: parseInt(document.getElementById("modalProdThreshold").value, 10),
+          material: document.getElementById("modalProdMaterial").value.trim(),
+          jewelleryType: document.getElementById("modalProdType").value.trim(),
+          status: document.getElementById("modalProdStatus").value,
+          isFeatured: document.getElementById("modalProdFeatured").value === "1",
+          badge: document.getElementById("modalProdBadge").value.trim(),
+          description: document.getElementById("modalProdDesc").value.trim(),
+          images: this.modalImages.length > 0 ? this.modalImages : ["https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&w=1000&q=85"]
+        };
+
+        const endpoint = isEdit ? `/api/admin/products/${id}` : "/api/admin/products";
+        const method = isEdit ? "PUT" : "POST";
+
+        const { ok, data } = await this.apiCall(endpoint, method, payload);
+        if (ok) {
+          this.showToast(isEdit ? `Updated "${payload.name}" successfully.` : `Added "${payload.name}" to store.`);
+          this.closeProductModal();
+          await this.loadProducts();
+          await this.loadStats();
+          await this.loadLogs();
+        } else {
+          alert(data.error || "Failed to save product.");
+        }
+      }
+
+      async quickToggleStatus(id, newStatus) {
+        const { ok } = await this.apiCall(`/api/admin/products/${id}/status`, "PATCH", { status: newStatus });
+        if (ok) {
+          this.showToast(`Product visibility set to ${newStatus}.`);
+          await this.loadProducts();
+          await this.loadStats();
+        }
+      }
+
+      async adjustStock(id, newStock) {
+        if (newStock < 0) newStock = 0;
+        const { ok } = await this.apiCall(`/api/admin/products/${id}/stock`, "PATCH", { stock: newStock });
+        if (ok) {
+          this.showToast(`Stock updated to ${newStock}.`);
+          await this.loadProducts();
+          await this.loadStats();
+        }
+      }
+
+      async promptCustomStock(id, currentStock) {
+        const val = prompt("Enter new warehouse stock quantity:", currentStock);
+        if (val === null) return;
+        const intVal = parseInt(val, 10);
+        if (!isNaN(intVal)) {
+          await this.adjustStock(id, intVal);
+        }
+      }
+
+      async handleDeleteProduct(id, name) {
+        // Requirement 7: Confirmation prompt
+        const ok = confirm(`Are you sure you want to delete this product? This action cannot be undone.\n\nProduct: "${name}"`);
+        if (!ok) return;
+
+        const res = await this.apiCall(`/api/admin/products/${id}`, "DELETE");
+        if (res.ok) {
+          this.showToast(`Product "${name}" archived.`);
+          await this.loadProducts();
+          await this.loadStats();
+          await this.loadLogs();
+        } else {
+          alert(res.data.error || "Failed to delete product.");
+        }
+      }
+
+      async loadCategories() {
+        const { ok, data } = await this.apiCall("/api/admin/categories");
+        if (!ok || !data.categories) return;
+
+        const tbody = document.getElementById("adminCategoriesTableBody");
+        if (!tbody) return;
+
+        tbody.innerHTML = data.categories.map(c => `
+          <tr>
+            <td><img src="${c.image}" style="width: 36px; height: 36px; border-radius: var(--radius-xs); object-fit: cover;"></td>
+            <td><strong>${c.name}</strong></td>
+            <td><code>${c.filter_key}</code></td>
+            <td>${c.count_label}</td>
+            <td><span class="admin-pill ${c.is_active ? 'pill-active' : 'pill-hidden'}">${c.is_active ? 'Active' : 'Inactive'}</span></td>
+            <td style="text-align: right;">
+              <button type="button" class="admin-action-btn danger" onclick="adminApp.handleDeleteCategory('${c.id}')">Delete</button>
+            </td>
+          </tr>
+        `).join("");
+      }
+
+      async openAddCategoryModal() {
+        const name = prompt("Enter new Category Name (e.g. Brooches, Solitaire Sets):");
+        if (!name || !name.trim()) return;
+        const { ok } = await this.apiCall("/api/admin/categories", "POST", { name: name.trim() });
+        if (ok) {
+          this.showToast(`Category "${name}" created.`);
+          await this.loadCategories();
+          await this.loadLogs();
+        }
+      }
+
+      async handleDeleteCategory(id) {
+        if (!confirm(`Are you sure you want to delete category "${id}"?`)) return;
+        const { ok } = await this.apiCall(`/api/admin/categories/${id}`, "DELETE");
+        if (ok) {
+          this.showToast("Category removed.");
+          await this.loadCategories();
+        }
+      }
+
+      async loadOrders() {
+        const { ok, data } = await this.apiCall("/api/admin/orders");
+        if (!ok || !data.orders) return;
+
+        const tbody = document.getElementById("adminOrdersTableBody");
+        if (!tbody) return;
+
+        if (data.orders.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem;">No orders found.</td></tr>`;
+          return;
+        }
+
+        const validStatuses = ["Order Confirmed", "Packed", "Shipped", "Out for Delivery", "Delivered"];
+
+        tbody.innerHTML = data.orders.map(o => {
+          const options = validStatuses.map(st => `<option value="${st}" ${o.status === st ? 'selected' : ''}>${st}</option>`).join("");
+          const itemsSummary = (o.items || []).map(i => `${i.name} (×${i.quantity || 1})`).join(", ") || "Jewellery Order";
+
+          return `
+            <tr>
+              <td><strong>#${o.id}</strong><div style="font-size:0.7rem; color:var(--admin-text-sub);">${o.created_at ? o.created_at.slice(0, 10) : ''}</div></td>
+              <td><strong>${o.customer_name}</strong><div style="font-size:0.72rem; color:var(--admin-text-sub);">${o.customer_email}</div></td>
+              <td style="max-width:200px; font-size:0.78rem;" title="${itemsSummary}">${itemsSummary}</td>
+              <td><strong>₹${Number(o.total).toLocaleString("en-IN")}</strong></td>
+              <td><span class="admin-pill pill-active">${o.payment_status || 'Paid'}</span></td>
+              <td><span class="admin-pill pill-active">${o.status}</span></td>
+              <td>
+                <select class="admin-input" style="padding: 0.3rem 0.5rem; font-size: 0.78rem;" onchange="adminApp.handleUpdateOrderStatus('${o.id}', this.value)">
+                  ${options}
+                </select>
+              </td>
+            </tr>
+          `;
+        }).join("");
+      }
+
+      async handleUpdateOrderStatus(orderId, newStatus) {
+        const { ok, data } = await this.apiCall(`/api/admin/orders/${orderId}/status`, "PATCH", { status: newStatus });
+        if (ok) {
+          this.showToast(`Order #${orderId} status set to "${newStatus}".`);
+          await this.loadOrders();
+          await this.loadStats();
+          await this.loadLogs();
+        } else {
+          alert(data.error || "Failed to update order status.");
+        }
+      }
+
+      async loadCustomers() {
+        const { ok, data } = await this.apiCall("/api/admin/customers");
+        if (!ok || !data.customers) return;
+
+        const tbody = document.getElementById("adminCustomersTableBody");
+        if (!tbody) return;
+
+        if (data.customers.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; padding: 2rem;">No registered customers yet.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = data.customers.map(c => `
+          <tr>
+            <td><strong>${c.name}</strong></td>
+            <td><code>${c.email}</code></td>
+            <td><span class="admin-pill" style="background:#FAF6F0; color:var(--admin-accent); border:1px solid var(--admin-accent);">${c.tier || 'Amber Patron'}</span></td>
+            <td>${c.createdAt ? c.createdAt.slice(0, 10) : '—'}</td>
+            <td><strong>${c.orderCount || 0}</strong> orders</td>
+            <td><strong>₹${Number(c.totalSpent || 0).toLocaleString("en-IN")}</strong></td>
+            <td><span class="admin-pill ${c.isVerified ? 'pill-active' : 'pill-oos'}">${c.isVerified ? 'Verified' : 'Unverified'}</span></td>
+          </tr>
+        `).join("");
+      }
+
+      async loadLogs() {
+        const { ok, data } = await this.apiCall("/api/admin/logs");
+        if (!ok || !data.logs) return;
+
+        const tbody = document.getElementById("adminLogsTableBody");
+        if (!tbody) return;
+
+        if (data.logs.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; padding: 2rem;">No logs recorded yet.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = data.logs.map(l => `
+          <tr>
+            <td style="white-space:nowrap; font-size:0.75rem; color:var(--admin-text-sub);">${l.created_at ? l.created_at.replace('T', ' ').slice(0, 19) : ''}</td>
+            <td><code>${l.admin_email}</code></td>
+            <td><strong>${l.action}</strong></td>
+            <td><span class="admin-pill pill-hidden">${l.entity_type || '—'}</span></td>
+            <td><code>${l.entity_id || '—'}</code></td>
+            <td style="font-size:0.78rem;">${l.details || '—'}</td>
+          </tr>
+        `).join("");
+      }
+
+      showToast(message) {
+        const container = document.getElementById("adminToastContainer");
+        if (!container) return;
+
+        const toast = document.createElement("div");
+        toast.className = "cart-toast";
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => toast.classList.add("show"), 10);
+        setTimeout(() => {
+          toast.classList.remove("show");
+          setTimeout(() => { if (toast.parentNode) toast.parentNode.removeChild(toast); }, 300);
+        }, 3200);
+      }
+
+      refreshIcons() {
+        if (window.lucide && typeof window.lucide.createIcons === "function") {
+          window.lucide.createIcons();
+        }
+      }
+    }
+
+    // Initialize Admin Controller
+    const adminApp = new LuxuryAdminApp();
+  </script>
+</body>
+</html>
